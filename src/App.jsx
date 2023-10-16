@@ -1,24 +1,25 @@
 import "./App.css";
-import { Configuration, OpenAIApi } from "openai";
-
+import OpenAI from "openai";
+import { useState } from "react";
 function App() {
-  const cofiguration = new Configuration({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+  const [image, setImage] = useState(null);
+  const openai = new OpenAI({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY, // This is also the default, can be omitted
+    dangerouslyAllowBrowser: true,
   });
 
-  const openai = new OpenAIApi(cofiguration);
-
   const generateImage = async () => {
-    const res = await openai.createImage({
-      prompt: "this is a test",
-      n: 1,
-      size: "1024x1024",
+    const image = await openai.images.generate({
+      prompt: "A cute baby sea otter",
     });
-    console.log(res.data.data[0].url);
+
+    console.log(image.data);
+    setImage(image.data[0].url);
   };
   return (
     <div className="App">
       <button onClick={generateImage}>Generate Image</button>
+      {image && <img src={image} alt={"openai 이미지 생성"} />}
     </div>
   );
 }
