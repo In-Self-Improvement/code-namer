@@ -1,6 +1,8 @@
+import React from "react";
 import "./App.css";
 import OpenAI from "openai";
 import { useState } from "react";
+
 function App() {
   const [data_type, setDataType] = useState("");
   const [variable_function, setVariableFunction] = useState("");
@@ -13,27 +15,31 @@ function App() {
     dangerouslyAllowBrowser: true,
   });
 
-  const handleDataTypeChange = (e) => {
+  const handleDataTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDataType(e.target.value);
     console.log("data_type", data_type);
   };
 
-  const handleVariableFunctionChange = (e) => {
+  const handleVariableFunctionChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setVariableFunction(e.target.value);
     console.log("variable_function", variable_function);
   };
 
-  const handleRecommendationNumberChange = (e) => {
-    setRecommendationNumber(e.target.value);
+  const handleRecommendationNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRecommendationNumber(Number(e.target.value));
     console.log("recommendation_number", recommendation_number);
   };
 
-  const handleFunctionality = (e) => {
+  const handleFunctionality = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFunctionality(e.target.value);
     console.log("functionality", functionality);
   };
 
-  const assembleContent = (e) => {
+  const assembleContent = () => {
     setContent(
       `You are a programmer who is good at naming.
       데이터 타입은 ${data_type}입니다. 
@@ -42,16 +48,16 @@ function App() {
     );
   };
 
-  const generateText = async (e) => {
+  const generateText = async () => {
     assembleContent();
 
-    const completion = await openai.chat.completions.create({
+    const completion: any = await openai.chat.completions.create({
       messages: [{ role: "system", content }],
-      model: "gpt-3.5-turbo",
+      model: "text-davinci-002",
     });
 
-    console.log(completion.choices[0].message.content);
-    setText(completion.choices[0].message.content);
+    console.log(completion.choices[0].text);
+    setText(completion.choices[0].text);
   };
   return (
     <div className="App">
