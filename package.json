@@ -10,13 +10,17 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^29.5.6",
     "@types/react": "^18.2.30",
+    "autoprefixer": "^10.4.16",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "openai": "^4.12.1",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
     "react": "^18.2.0",
     "react-app-alias": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
     "web-vitals": "^2.1.4"
   },
@@ -24,7 +28,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "build:css": "postcss src/index.css -o public/index.css"
   },
   "eslintConfig": {
     "extends": [
