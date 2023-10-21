@@ -55,40 +55,62 @@ function TextGenerate() {
     setText(completion.choices[0].text);
   };
   return (
-    <div className="App">
-      <form>
-        <label>
-          데이터 타입
-          <input
-            type="text"
-            name="데이터_타입"
-            onChange={handleDataTypeChange}
-          />
-        </label>
-        <label>
-          함수 | 변수
-          <input
-            type="text"
-            name="변수_함수"
-            onChange={handleVariableFunctionChange}
-          />
-        </label>
-        <label>
-          추천 갯수
-          <input
-            type="text"
-            name="추천_개수"
-            onChange={handleRecommendationNumberChange}
-          />
-        </label>
-        <label>
-          기능
-          <input type="text" name="기능" onChange={handleFunctionality} />
-        </label>
-      </form>
-      <button onClick={generateText}>문자 생성</button>
-      <br />
-      {text && <p>{text}</p>}
+    <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded shadow-md w-96">
+        <form className="space-y-4">
+          <label className="block">
+            <span className="text-sm text-gray-700 mb-2 block">
+              데이터 타입
+            </span>
+            <input
+              type="text"
+              name="데이터_타입"
+              onChange={handleDataTypeChange}
+              className="w-full p-2 border rounded-md focus:outline-none focus:border-indigo-500"
+            />
+          </label>
+          <label className="block">
+            <span className="text-sm text-gray-700 mb-2 block">
+              함수 | 변수
+            </span>
+            <input
+              type="text"
+              name="변수_함수"
+              onChange={handleVariableFunctionChange}
+              className="w-full p-2 border rounded-md focus:outline-none focus:border-indigo-500"
+            />
+          </label>
+          <label className="block">
+            <span className="text-sm text-gray-700 mb-2 block">추천 갯수</span>
+            <input
+              type="text"
+              name="추천_개수"
+              onChange={handleRecommendationNumberChange}
+              className="w-full p-2 border rounded-md focus:outline-none focus:border-indigo-500"
+            />
+          </label>
+          <label className="block">
+            <span className="text-sm text-gray-700 mb-2 block">기능</span>
+            <input
+              type="text"
+              name="기능"
+              onChange={handleFunctionality}
+              className="w-full p-2 border rounded-md focus:outline-none focus:border-indigo-500"
+            />
+          </label>
+        </form>
+        <button
+          onClick={generateText}
+          className="bg-blue-500 text-white mt-4 rounded p-2 w-full hover:bg-blue-600 focus:outline-none"
+        >
+          문자 생성
+        </button>
+      </div>
+      {text && (
+        <div className="mt-4 p-4 w-96 bg-white rounded shadow-md">
+          <p className="text-sm text-gray-700">{text}</p>
+        </div>
+      )}
     </div>
   );
 }
