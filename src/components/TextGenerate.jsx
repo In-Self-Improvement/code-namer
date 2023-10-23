@@ -1,6 +1,8 @@
 import React from "react";
 import OpenAI from "openai";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeTodo } from "~/redux/actions/todos";
 
 function TextGenerate() {
   const [data_type, setDataType] = useState("");
@@ -13,6 +15,10 @@ function TextGenerate() {
     apiKey: process.env.REACT_APP_OPENAI_API_KEY, // This is also the default, can be omitted
     dangerouslyAllowBrowser: true,
   });
+
+  //redux test
+  const todos = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
 
   const handleDataTypeChange = (e) => {
     setDataType(e.target.value);
@@ -45,8 +51,7 @@ function TextGenerate() {
 
   const generateText = async () => {
     assembleContent();
-
-    const completion: any = await openai.chat.completions.create({
+    const completion = await openai.chat.completions.create({
       messages: [{ role: "system", content }],
       model: "text-davinci-002",
     });
