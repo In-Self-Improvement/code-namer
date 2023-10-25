@@ -51,13 +51,15 @@ function TextGenerate() {
 
   const generateText = async () => {
     assembleContent();
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content }],
-      model: "text-davinci-002",
-    });
+    console.log("is it work");
 
-    console.log(completion.choices[0].text);
-    setText(completion.choices[0].text);
+    // const completion = await openai.chat.completions.create({
+    //   messages: [{ role: "system", content }],
+    //   model: "text-davinci-002",
+    // });
+
+    // console.log(completion.choices[0].text);
+    // setText(completion.choices[0].text);
   };
   return (
     <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100">
