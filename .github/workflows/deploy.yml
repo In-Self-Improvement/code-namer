@@ -46,11 +46,11 @@ jobs:
         run: |
           unset CI
           npm run build
-      - name: Generate Environment Variables File for Production
+      - name: Setting Environment Variables File for .env
         run: |
-          echo "REACT_APP_OPENAI_API_KEY=$REACT_APP_OPENAI_API_KEY" >> .env.production
-        env:
-          REACT_APP_OPENAI_API_KEY: ${{ secrets.REACT_APP_OPENAI_API_KEY }}
+          echo "REACT_APP_OPENAI_API_KEY=$REACT_APP_OPENAI_API_KEY" >> .env.
+          cat .env
+          
       # Deploy to the S3 server
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
