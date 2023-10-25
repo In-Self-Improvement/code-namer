@@ -1,7 +1,5 @@
 import React from "react";
 import "./App.css";
-
-// import TextGenerate from "./components/TextGenerate";
 import TextGenerate from "~/components/TextGenerate";
 
 function App() {
