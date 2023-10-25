@@ -1,7 +1,7 @@
 import React from "react";
 import OpenAI from "openai";
 import { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function TextGenerate() {
   const [data_type, setDataType] = useState("");
