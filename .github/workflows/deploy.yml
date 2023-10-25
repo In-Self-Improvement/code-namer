@@ -36,20 +36,20 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Git checkout
         uses: actions/checkout@v3
-
-      # Install packages
-      - name: Install packages
-        run: |
-          npm install
-
-      - name: Production build
-        run: |
-          unset CI
-          npm run build
       - name: Setting Environment Variables File for .env
         run: |
           echo "REACT_APP_OPENAI_API_KEY=${{ secrets.REACT_APP_OPENAI_API_KEY }}" >> .env
           cat .env
+      # Install packages
+      - name: Install packages
+        run: |
+          npm install
+      
+      - name: Production build
+        run: |
+          unset CI
+          npm run build
+     
           
       # Deploy to the S3 server
       - name: Deploy to S3
@@ -63,7 +63,6 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "build"
           SKIP_PREFLIGHT_CHECK: ${{ secrets.SKIP_PREFLIGHT_CHECK }}
-          REACT_APP_OPENAI_API_KEY: ${{ secrets.REACT_APP_OPENAI_API_KEY }}
 
       # Invalidate Cloudfront (this action)
       - name: invalidate
