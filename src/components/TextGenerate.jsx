@@ -51,7 +51,7 @@ function TextGenerate() {
 
   const generateText = async () => {
     assembleContent();
-    console.log("is it work?");
+    console.log("is it work");
 
     // const completion = await openai.chat.completions.create({
     //   messages: [{ role: "system", content }],
