@@ -48,7 +48,7 @@ jobs:
           npm run build
       - name: Setting Environment Variables File for .env
         run: |
-          echo "REACT_APP_OPENAI_API_KEY=$REACT_APP_OPENAI_API_KEY" >> .env.
+          echo "REACT_APP_OPENAI_API_KEY=$REACT_APP_OPENAI_API_KEY" >> .env
           cat .env
           
       # Deploy to the S3 server
