@@ -10,10 +10,15 @@ function TextGenerate() {
   const [functionality, setFunctionality] = useState("");
   const [text, setText] = useState("");
   const [content, setContent] = useState("");
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY, // This is also the default, can be omitted
-    dangerouslyAllowBrowser: true,
-  });
+  console.log(
+    "process.env.REACT_APP_OPENAI_API_KEY",
+    process.env.REACT_APP_OPENAI_API_KEY
+  );
+
+  // const openai = new OpenAI({
+  //   apiKey: process.env.REACT_APP_OPENAI_API_KEY, // This is also the default, can be omitted
+  //   dangerouslyAllowBrowser: true,
+  // });
 
   const handleDataTypeChange = (e) => {
     setDataType(e.target.value);
@@ -47,12 +52,12 @@ function TextGenerate() {
   const generateText = async () => {
     assembleContent();
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "system", content }],
-    });
-    console.log(completion.choices[0].message.content);
-    setText(completion.choices[0].message.content);
+    // const completion = await openai.chat.completions.create({
+    //   model: "gpt-3.5-turbo",
+    //   messages: [{ role: "system", content }],
+    // });
+    // console.log(completion.choices[0].message.content);
+    // setText(completion.choices[0].message.content);
   };
   return (
     <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100">
