@@ -48,12 +48,11 @@ function TextGenerate() {
     assembleContent();
 
     const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
       messages: [{ role: "system", content }],
-      model: "text-davinci-002",
     });
-
-    console.log(completion.choices[0].text);
-    setText(completion.choices[0].text);
+    console.log(completion.choices[0].message.content);
+    setText(completion.choices[0].message.content);
   };
   return (
     <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100">
