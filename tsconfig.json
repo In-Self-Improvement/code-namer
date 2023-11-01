@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react",
     "target": "es2016",
-    "moduleResolution": "node", // 이 부분을 추가
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true

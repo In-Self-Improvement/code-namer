@@ -3,6 +3,8 @@ import OpenAI from "openai";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { SET_LOADING } from "~/redux/slice/loadingSlice";
+
 function TextGenerate() {
   const [data_type, setDataType] = useState("");
   const [variable_function, setVariableFunction] = useState("");
@@ -10,6 +12,7 @@ function TextGenerate() {
   const [functionality, setFunctionality] = useState("");
   const [text, setText] = useState("");
   const [content, setContent] = useState("");
+  const dispatch = useDispatch();
 
   const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY, // This is also the default, can be omitted
@@ -18,22 +21,18 @@ function TextGenerate() {
 
   const handleDataTypeChange = (e) => {
     setDataType(e.target.value);
-    console.log("data_type", data_type);
   };
 
   const handleVariableFunctionChange = (e) => {
     setVariableFunction(e.target.value);
-    console.log("variable_function", variable_function);
   };
 
   const handleRecommendationNumberChange = (e) => {
     setRecommendationNumber(Number(e.target.value));
-    console.log("recommendation_number", recommendation_number);
   };
 
   const handleFunctionality = (e) => {
     setFunctionality(e.target.value);
-    console.log("functionality", functionality);
   };
 
   const assembleContent = () => {
@@ -47,13 +46,14 @@ function TextGenerate() {
 
   const generateText = async () => {
     assembleContent();
-
+    dispatch(SET_LOADING(true));
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [{ role: "system", content }],
     });
     console.log(completion.choices[0].message.content);
     setText(completion.choices[0].message.content);
+    dispatch(SET_LOADING(false));
   };
   return (
     <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100">
