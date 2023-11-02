@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { SET_LOADING } from "~/redux/slice/loadingSlice";
-import { convertStringToArray } from "~/utils/openAIDataParsing";
+import { convertStringToObject } from "~/utils/openAIDataParsing";
 
 function TextGenerate() {
   const [data_type, setDataType] = useState("없음");
@@ -58,7 +58,7 @@ function TextGenerate() {
     });
     console.log(completion.choices[0].message);
 
-    const answer = convertStringToArray(completion.choices[0].message.content);
+    const answer = convertStringToObject(completion.choices[0].message.content);
     console.log("answer", answer);
 
     // setText(answer);
