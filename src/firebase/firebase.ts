@@ -27,8 +27,7 @@ const db = getFirestore();
 const auth = getAuth(app);
 
 const firebaseAPI = axios.create({
-  baseURL:
-    "https://firestore.googleapis.com/v1/projects/code-namer-7c179/databases/(default)/documents",
+  baseURL: process.env.REACT_APP_FIREBASE_BASEURL,
 });
 
 // 요청을 보내기 전에 토큰을 헤더에 추가하는 인터셉터
@@ -36,8 +35,6 @@ firebaseAPI.interceptors.request.use(
   async (config) => {
     if (auth.currentUser) {
       const token = await getIdToken(auth.currentUser);
-      console.log("token", token);
-
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
