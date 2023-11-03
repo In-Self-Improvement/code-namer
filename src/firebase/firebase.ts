@@ -4,7 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, getIdToken } from "firebase/auth";
 import axios from "axios";
-
+import Cookies from "js-cookie";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -35,7 +35,11 @@ firebaseAPI.interceptors.request.use(
   async (config) => {
     if (auth.currentUser) {
       const token = await getIdToken(auth.currentUser);
+      Cookies.set("auth_token", token, { expires: 7, path: "/" });
       config.headers.Authorization = `Bearer ${token}`;
+      console.log("token", token);
+    } else if (Cookies.get("auth_token")) {
+      config.headers.Authorization = `Bearer ${Cookies.get("auth_token")}`;
     }
     return config;
   },
