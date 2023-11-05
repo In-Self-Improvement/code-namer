@@ -8,7 +8,7 @@ import {
   convertStringToObject,
   convertToFirestoreFormat,
 } from "~/utils/convert";
-import firebaseAPI from "~/firebase/firebase";
+import { updateData, postData, getData, getDataByIndex } from "~/api/api";
 function TextGenerate() {
   const [data_type, setDataType] = useState("함수");
   const [variable_function, setVariableFunction] = useState("함수");
@@ -42,7 +42,7 @@ function TextGenerate() {
 
   const assembleContent = () => {
     return `당신은 함수 또는 변수 이름을 정말 잘 잣는 사람입니다.
-      저는 ${setVariableFunction} 이름을 짓고 싶어요.
+      저는 ${variable_function} 이름을 짓고 싶어요.
       데이터 타입은 ${data_type} 입니다
       기능은 ${functionality} 입니다
       ${recommendation_number} 개의 이름을 추천해주세요.
@@ -79,22 +79,27 @@ function TextGenerate() {
             fields: fields,
           },
         },
-        selectedName: { stringValue: "선택된 이름" },
+        selectedName: { stringValue: "selected name" },
         likes: { integerValue: 0 },
-        username: { stringValue: "유저 이름" },
+        username: { stringValue: "테스터" },
         createdAt: { timestampValue: new Date().toISOString() },
         desc: { stringValue: functionality },
       },
     };
+    postData("/test", data);
+  };
 
-    firebaseAPI
-      .post("/test", data)
-      .then((response) => {
-        console.log("Document added successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error adding document:", error);
-      });
+  const updateDataV2 = async () => {
+    const data = {
+      fields: {
+        likes: { integerValue: 2 },
+      },
+    };
+    updateData("/test", data);
+  };
+
+  const getDataV2 = async () => {
+    getDataByIndex("/test");
   };
 
   const checkVaildGenerateBtn = () => {

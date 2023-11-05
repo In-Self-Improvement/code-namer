@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TextGenerate from "~/components/TextGenerate";
 import SignIn from "~/components/signin/SignIn";
 import SignUp from "~/components/signup/SignUp";
+import DashBoard from "~/pages/DashBoard";
 const Router = () => {
   return (
     <BrowserRouter>
@@ -9,6 +10,7 @@ const Router = () => {
         <Route path="/" element={<TextGenerate />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/dashboard" element={<DashBoard />} />
       </Routes>
     </BrowserRouter>
   );
