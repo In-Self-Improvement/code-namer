@@ -1,0 +1,19 @@
+.sidebar-container {
+  position: relative;
+}
+
+.sidebar-content {
+  position: fixed; /* 사이드바를 화면에 고정 */
+  top: 0; /* 상단에서부터 시작 */
+  right: -250px; /* 오른쪽에서 250px 벗어나게 시작 (사이드바 너비에 따라 조정) */
+  width: 250px; /* 사이드바의 너비 */
+  height: 100%; /* 전체 높이 */
+  background: #fff; /* 배경색은 필요에 따라 조정 */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+  transition: right 0.3s; /* 부드러운 애니메이션 효과 */
+  /* 필요한 경우 여기에 더 많은 스타일을 추가 */
+}
+
+.sidebar-content.show {
+  left: 0; /* 클릭 시에는 오른쪽 끝에 붙도록 */
+}
