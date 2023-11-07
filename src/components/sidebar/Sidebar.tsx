@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import SidebarHeader from "./sidebarHeader/SidebarHeader";
 import SidebarContent from "./sidebarContent/SidebarContent";
+import NavigationButton from "./navigationButton/NavigationButton";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -15,6 +16,7 @@ const Sidebar = () => {
       <SidebarHeader onClick={toggleSidebar} />
       <div className={`sidebar-content ${isSidebarOpen ? "show" : ""}`}>
         <SidebarHeader onClick={toggleSidebar} />
+        <NavigationButton />
         <SidebarContent />
         <SidebarContent />
         <SidebarContent />

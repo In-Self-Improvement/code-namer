@@ -16,4 +16,5 @@
 
 .sidebar-content.show {
   left: 0; /* 클릭 시에는 오른쪽 끝에 붙도록 */
+  padding: 20px;
 }
