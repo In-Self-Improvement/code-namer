@@ -1,0 +1,13 @@
+.navigation_button_wrapper {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #21262d;
+  color: #c9d1d9;
+  justify-content: center;
+  text-align: center;
+  border-radius: 8px;
+}
+.navigation_button_wrapper:hover {
+  background-color: #c9d1d9;
+  color: #21262d;
+}
