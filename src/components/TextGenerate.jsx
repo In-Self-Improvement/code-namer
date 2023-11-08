@@ -89,19 +89,6 @@ function TextGenerate() {
     postData("/test", data);
   };
 
-  const updateDataV2 = async () => {
-    const data = {
-      fields: {
-        likes: { integerValue: 2 },
-      },
-    };
-    updateData("/test", data);
-  };
-
-  const getDataV2 = async () => {
-    getDataByIndex("/test");
-  };
-
   const checkVaildGenerateBtn = () => {
     if (
       data_type &&
