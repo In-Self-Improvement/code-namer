@@ -4,7 +4,7 @@ import Router from "./Router";
 import Sidebar from "./components/sidebar/Sidebar";
 function App() {
   return (
-    <div>
+    <div className="app-container">
       <Sidebar />
       <Router />
     </div>

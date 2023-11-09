@@ -1,4 +1,5 @@
 import firebaseAPI from "~/firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export const getData = async (db: string) => {
   try {
@@ -30,7 +31,47 @@ export const postData = async (db: string, data: any) => {
       console.log("Document added successfully:", response.data);
     })
     .catch((error) => {
-      console.error("Error adding document:", error);
+      if (error.response) {
+        // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // 요청이 이루어 졌으나 응답을 받지 못함
+        console.log(error.request);
+      } else {
+        // 오류를 발생시킨 요청을 설정하는 중 문제가 발생함
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    });
+};
+
+const getUserData = () => {};
+
+export const postUserData = async (data: any) => {
+  const userId = "test3@naver.com";
+  // const userUId =
+  const db = "/users/?documentId=" + userId;
+  firebaseAPI
+    .post(db, data)
+    .then((response) => {
+      console.log("Document added successfully:", response.data);
+    })
+    .catch((error) => {
+      if (error.response) {
+        // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // 요청이 이루어 졌으나 응답을 받지 못함
+        console.log(error.request);
+      } else {
+        // 오류를 발생시킨 요청을 설정하는 중 문제가 발생함
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
     });
 };
 
