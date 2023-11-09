@@ -5,6 +5,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, getIdToken } from "firebase/auth";
 import axios from "axios";
 import Cookies from "js-cookie";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -47,6 +48,9 @@ firebaseAPI.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+// const getAuthState = () => {
+//   const [user, loading, error] = useAuthState(auth);
+// };
 
 export default firebaseAPI;
 

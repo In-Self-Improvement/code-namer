@@ -5,11 +5,13 @@ import "./SidebarHeader.css";
 
 const SidebarHeader = ({ onClick }) => {
   return (
-    <div className="sidebar-container">
-      <button className="sidebar-toggle" onClick={onClick}>
-        <MenuIcon />
-      </button>
-      <h1 className="sidebar-title">Code Namer</h1>
+    <div className="sidebar_header_container">
+      <div className="sidebar_header">
+        <button className="sidebar_toggle" onClick={onClick}>
+          <MenuIcon />
+        </button>
+        <h1 className="sidebar_title">Code Namer</h1>
+      </div>
     </div>
   );
 };

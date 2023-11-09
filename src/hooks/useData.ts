@@ -1,11 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import * as api from "~/api/api"; // api.ts 파일에서 함수를 가져옵니다.
+import * as api from "~/api/api";
+import * as openai from "~/api/openai";
 
-// 데이터를 가져오는 커스텀 훅
 export const useGetData = (db) => {
   return useQuery(["data", db], () => api.getData(db), {
-    // 여기에 옵션을 추가할 수 있습니다. 예를 들어:
-    staleTime: 1000 * 60 * 5, // 5분 동안 fresh 상태를 유지
+    staleTime: 1000 * 60 * 5,
   });
 };
 
@@ -41,4 +40,10 @@ export const useGetDataByIndex = (db, index) => {
       // 옵션
     }
   );
+};
+
+export const useGetName = (content) => {
+  return useQuery(["name"], () => openai.getName(content), {
+    staleTime: 1000 * 60 * 5,
+  });
 };

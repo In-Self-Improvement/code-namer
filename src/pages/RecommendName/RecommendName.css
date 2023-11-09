@@ -45,6 +45,9 @@ input[type="text"] {
   align-items: center;
   width: 700px;
 }
+.recommend_name_input:focus {
+  outline: none;
+}
 
 .recommend_name_select {
   margin-right: 20px;
@@ -94,7 +97,6 @@ input[type="text"] {
   width: 50px;
   background-color: #f8f8f8;
   color: #979797;
-  /* padding: 2px 4px; */
   font-size: 14px;
 }
 
