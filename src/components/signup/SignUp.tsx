@@ -1,23 +1,33 @@
-"use client";
-import React, { useState } from "react";
+'use client';
 
-import { auth } from "~/firebase/firebase";
-import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { SET_LOADING } from "~/redux/slice/loadingSlice";
+import React, { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { auth } from '~/firebase/firebase';
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordMatch, setIsPasswordMatch] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const signUpError = (error: string) => {
+    // 에러문구가 모여있는 파일이 있으면 좋겠다.
+    // 객체로 관리
+    const isAlreadyInUse = error === 'auth/email-already-in-use';
+    if (isAlreadyInUse) {
+      alert('이미 가입된 이메일입니다.');
+    }
+  };
 
   const createUser = async () => {
     try {
@@ -30,25 +40,16 @@ const SignUp = () => {
         password
       );
       if (user) {
-        navigate("/signin");
+        navigate('/signin');
       }
     } catch (error) {
-      signUpError(error);
-    }
-  };
-
-  const signUpError = (error: any) => {
-    // 에러문구가 모여있는 파일이 있으면 좋겠다.
-    // 객체로 관리
-    const isAlreadyInUse = error?.code === "auth/email-already-in-use";
-    if (isAlreadyInUse) {
-      alert("이미 가입된 이메일입니다.");
+      signUpError(error?.code);
     }
   };
 
   const isPasswordsMatch = () => {
     if (password !== confirmPassword) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
+      setPasswordError('비밀번호가 일치하지 않습니다.');
       return false;
     }
     return true;
@@ -68,26 +69,26 @@ const SignUp = () => {
   };
 
   const navToSignIn = () => {
-    navigate("/signin");
+    navigate('/signin');
   };
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
   // 정규식 테스트 케이스
-  const validateEmail = (email: string) => {
+  const validateEmail = (id: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
+    return re.test(id);
   };
 
   const checkEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = event.target.value;
     setEmail(emailValue);
     if (!validateEmail(emailValue)) {
-      setEmailError("유효한 이메일을 입력하세요.");
+      setEmailError('유효한 이메일을 입력하세요.');
       setIsPasswordMatch(false);
     } else {
-      setEmailError("");
+      setEmailError('');
     }
   };
 
@@ -95,10 +96,10 @@ const SignUp = () => {
     const passwordValue = event.target.value;
     setPassword(passwordValue);
     if (confirmPassword && passwordValue !== confirmPassword) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
+      setPasswordError('비밀번호가 일치하지 않습니다.');
       setIsPasswordMatch(false);
     } else {
-      setPasswordError("");
+      setPasswordError('');
       setIsPasswordMatch(confirmPassword.length > 0);
     }
   };
@@ -109,10 +110,10 @@ const SignUp = () => {
     const confirmPasswordValue = event.target.value;
     setConfirmPassword(confirmPasswordValue);
     if (password !== confirmPasswordValue) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
+      setPasswordError('비밀번호가 일치하지 않습니다.');
       setIsPasswordMatch(false);
     } else {
-      setPasswordError("");
+      setPasswordError('');
       setIsPasswordMatch(confirmPasswordValue.length > 0);
     }
   };
@@ -134,7 +135,7 @@ const SignUp = () => {
             </label>
             <input
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                emailError ? "border-red-500" : ""
+                emailError ? 'border-red-500' : ''
               }`}
               id="email"
               type="email"
@@ -157,7 +158,7 @@ const SignUp = () => {
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
-                type={isPasswordVisible ? "text" : "password"}
+                type={isPasswordVisible ? 'text' : 'password'}
                 placeholder="비밀번호를 입력하세요."
                 value={password}
                 onChange={checkPasswordChange}
@@ -166,7 +167,7 @@ const SignUp = () => {
                 className="absolute top-0 right-0 h-full px-3 text-gray-700"
                 onClick={togglePasswordVisibility}
               >
-                {isPasswordVisible ? "숨기기" : "보기"}
+                {isPasswordVisible ? '숨기기' : '보기'}
               </button>
             </div>
           </div>
@@ -180,10 +181,10 @@ const SignUp = () => {
             <div className="relative">
               <input
                 className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                  passwordError ? "border-red-500" : ""
+                  passwordError ? 'border-red-500' : ''
                 }`}
                 id="confirmPassword"
-                type={isPasswordVisible ? "text" : "password"}
+                type={isPasswordVisible ? 'text' : 'password'}
                 placeholder="비밀번호를 다시 입력하세요."
                 value={confirmPassword}
                 onChange={checkConfirmPasswordChange}
@@ -202,8 +203,8 @@ const SignUp = () => {
             <button
               className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
                 emailError || passwordError
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
+                  ? 'opacity-50 cursor-not-allowed'
+                  : ''
               }`}
               type="submit"
               disabled={!!emailError || !!passwordError || !isPasswordMatch}

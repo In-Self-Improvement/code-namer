@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
-import OpenAI from "openai";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import OpenAI from 'openai';
+import { useDispatch } from 'react-redux';
 
-import { SET_LOADING } from "~/redux/slice/loadingSlice";
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
 import {
   convertStringToObject,
   convertToFirestoreFormat,
-} from "~/utils/convert";
-import { updateData, postData, getData, getDataByIndex } from "~/api/api";
-function TextGenerate() {
-  const [data_type, setDataType] = useState("함수");
-  const [variable_function, setVariableFunction] = useState("함수");
+} from '~/utils/convert';
+import { updateData, postData, getData, getDataByIndex } from '~/api/api';
+
+const TextGenerate = () => {
+  const [data_type, setDataType] = useState('함수');
+  const [variable_function, setVariableFunction] = useState('함수');
   const [recommendation_number, setRecommendationNumber] = useState(5);
-  const [functionality, setFunctionality] = useState("");
-  const [text, setText] = useState("");
+  const [functionality, setFunctionality] = useState('');
+  const [text, setText] = useState('');
   const [disabledBtn, setDisabledBtn] = useState(true);
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ function TextGenerate() {
   };
 
   const handleVariableFunctionChange = (e) => {
-    if (e.target.value === "함수") setDataType("함수");
+    if (e.target.value === '함수') setDataType('함수');
     setVariableFunction(e.target.value);
   };
 
@@ -40,8 +40,8 @@ function TextGenerate() {
     setFunctionality(e.target.value);
   };
 
-  const assembleContent = () => {
-    return `당신은 함수 또는 변수 이름을 정말 잘 잣는 사람입니다.
+  const assembleContent =
+    () => `당신은 함수 또는 변수 이름을 정말 잘 잣는 사람입니다.
       저는 ${variable_function} 이름을 짓고 싶어요.
       데이터 타입은 ${data_type} 입니다
       기능은 ${functionality} 입니다
@@ -51,16 +51,15 @@ function TextGenerate() {
       그 외의 답변은 써주지 마세요.
       ex) isEven: 기능 이름
       `;
-  };
 
   const generateText = async () => {
     const content = assembleContent();
-    console.log("content", content);
+    console.log('content', content);
 
     dispatch(SET_LOADING(true));
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "system", content }],
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'system', content }],
     });
     console.log(completion.choices[0].message);
 
@@ -76,17 +75,17 @@ function TextGenerate() {
       fields: {
         recommendedNames: {
           mapValue: {
-            fields: fields,
+            fields,
           },
         },
-        selectedName: { stringValue: "selected name" },
+        selectedName: { stringValue: 'selected name' },
         likes: { integerValue: 0 },
-        username: { stringValue: "테스터" },
+        username: { stringValue: '테스터' },
         createdAt: { timestampValue: new Date().toISOString() },
         desc: { stringValue: functionality },
       },
     };
-    postData("/test", data);
+    postData('/test', data);
   };
 
   const checkVaildGenerateBtn = () => {
@@ -124,7 +123,7 @@ function TextGenerate() {
               <option value="변수">변수</option>
             </select>
           </label>
-          {variable_function !== "함수" && (
+          {variable_function !== '함수' && (
             <label className="block">
               <span className="text-sm text-gray-700 mb-2 block">
                 데이터 타입
@@ -165,7 +164,7 @@ function TextGenerate() {
         <button
           onClick={generateText}
           className={` bg-blue-500 text-white mt-4 rounded p-2 w-full hover:bg-blue-600 focus:outline-none ${
-            disabledBtn ? "opacity-50 cursor-not-allowed" : ""
+            disabledBtn ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           disabled={disabledBtn}
         >
@@ -179,6 +178,6 @@ function TextGenerate() {
       )}
     </div>
   );
-}
+};
 
 export default TextGenerate;

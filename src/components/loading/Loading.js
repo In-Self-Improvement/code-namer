@@ -1,8 +1,8 @@
-import React from "react";
-import "./Loading.css";
-import Spinner from "~/assets/spinner.gif";
-import { selectIsLoading } from "~/redux/slice/loadingSlice";
-import { useSelector } from "react-redux";
+import React from 'react';
+import './Loading.css';
+import { useSelector } from 'react-redux';
+import Spinner from '~/assets/spinner.gif';
+import { selectIsLoading } from '~/redux/slice/loadingSlice';
 
 export const Loading = () => {
   const isLoading = useSelector(selectIsLoading);

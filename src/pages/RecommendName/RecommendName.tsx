@@ -1,45 +1,51 @@
-import React, { useEffect, useState } from "react";
-import "./RecommendName.css";
-import Select from "react-select";
-import { getName } from "~/api/openai";
+import React, { useEffect, useState } from 'react';
+import './RecommendName.css';
+import Select from 'react-select';
+import { getName } from '~/api/openai';
 import {
   generateFunctionNameContent,
   generateVariableNameContent,
-} from "~/utils/nameSuggestion";
-import { postUserData } from "~/api/api";
-import { userSchema } from "~/utils/firebaseSchema";
+} from '~/utils/nameSuggestion';
+
+import { postUserData } from '~/api/api';
+import { userSchema } from '~/utils/firebaseSchema';
+
+type ItemType = {
+  value: string;
+  label: string;
+};
 
 const RecommendName = () => {
-  const [selectedItem, setSelectedItem] = useState("함수");
-  const [desc, setDesc] = useState("");
+  const [selectedItem, setSelectedItem] = useState('함수');
+  const [desc, setDesc] = useState('');
 
-  const changeSelect = (e: any) => {
-    setSelectedItem(e.value);
+  const changeSelect = (event: { value: string; label: string }) => {
+    setSelectedItem(event.value);
   };
-  const setInputExample = (event: any) => {
+  const setInputExample = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setDesc("짝수인지 아닌지 판별하는 기능");
+    setDesc('짝수인지 아닌지 판별하는 기능');
   };
-  const selectItem = [
-    { value: "함수", label: "함수" },
-    { value: "변수", label: "변수" },
+  const selectItem: ItemType[] = [
+    { value: '함수', label: '함수' },
+    { value: '변수', label: '변수' },
   ];
   const getContent = () => {
-    if (selectedItem === "함수") return generateFunctionNameContent(desc);
-    else return generateVariableNameContent(desc);
+    if (selectedItem === '함수') return generateFunctionNameContent(desc);
+    return generateVariableNameContent(desc);
   };
 
-  const generateName = async (event: any) => {
+  const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const content = getContent();
     const name = await getName(content);
   };
 
-  const changeDesc = (e: any) => {
+  const changeDesc = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDesc(e.target.value);
   };
 
-  const saveData = (event: any) => {
+  const saveData = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     // const user = userSchema("test");
     // postUserData(user);
@@ -61,7 +67,7 @@ const RecommendName = () => {
           className="recommend_name_select"
           placeholder="선택해 주세요"
           onChange={changeSelect}
-          options={selectItem as any}
+          options={selectItem}
         />
 
         <button className="recommend_name_select_button" onClick={generateName}>

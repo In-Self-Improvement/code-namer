@@ -1,7 +1,7 @@
-import React from "react";
-import "./SignOutButton.css";
-import Button from "~/components/Button/Button";
-import LogoutIcon from "@mui/icons-material/Logout";
+import React from 'react';
+import './SignOutButton.css';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Button from '~/components/Button/Button';
 
 const SignOutButton = (props) => {
   const { onClick } = props;

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { getData } from "~/api/api";
-import { SET_LOADING } from "~/redux/slice/loadingSlice";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getData } from '~/api/api';
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
 
 const DashBoard = () => {
   const [data, setData] = useState(null);
@@ -9,8 +9,8 @@ const DashBoard = () => {
 
   const fetchData = async () => {
     dispatch(SET_LOADING(true));
-    const res = await getData("/test");
-    console.log("res", res);
+    const res = await getData('/test');
+    console.log('res', res);
     setData(res);
   };
 
@@ -26,11 +26,8 @@ const DashBoard = () => {
 
   return (
     <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      {data?.map((item, index) => (
-        <div
-          key={index}
-          className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg m-4"
-        >
+      {data?.map((item) => (
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg m-4">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             데이터 상세보기
           </h2>

@@ -1,12 +1,19 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "jsx": "react",
     "target": "es2016",
     "moduleResolution": "node",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@api/*": ["src/api/*"],
+      "@pages/*": ["src/pages/*"],
+      "@redux/*": ["src/redux/*"]
+    }
   },
   "include": ["src/**/*"]
 }
