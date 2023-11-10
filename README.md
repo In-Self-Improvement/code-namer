@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# 그라운드 규칙
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+이 문서는 브랜치 명명 규칙과 커밋 메시지 컨벤션에 대한 그라운드 규칙을 정의합니다. 이 규칙들은 프로젝트의 일관성을 유지하고 협업을 용이하게 하기 위해 적용됩니다.
 
-## Available Scripts
+## 브랜치 컨벤션
 
-In the project directory, you can run:
+브랜치 명명은 다음과 같은 형식을 따릅니다
 
-### `npm start`
+[`이름`]/[`브랜치 유형`]/[`이슈번호`]
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+예시: `bong/feat/1`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+이슈번호는 깃허브 이슈 트래커에서 생성된 번호를 사용합니다.
 
-### `npm test`
+브랜치 유형은 다음과 같습니다
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `feat/`: 새로운 기능 개발.
+- `fix/`: 버그 수정.
+- `hotfix/`: 프로덕션에 긴급히 적용해야 하는 버그 수정.
+- `release/`: 새 버전 출시 준비.
+- `develop/` : 일반적인 개발 작업.
+- `experiment/` 실험적 기능 테스트.
+- `refactor/`: 코드 리팩토링.
+- `test/`: 테스트 코드 추가 또는 개선.
+- `docs/`: 문서 작업.
+- `chore/`: 빌드 과정 또는 보조 기능 수정.
 
-### `npm run build`
+## 커밋 메세지 컨벤션
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+커밋 메시지는 다음과 같은 접두사를 사용하여 작성합니다
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `feat`: 새로운 기능 추가.
+- `fix`: 버그 수정.
+- `hotfix`: 급하게 치명적인 버그 수정.
+- `docs`: 문서 수정.
+- `style`: 코드 스타일 변경(코드 로직 변경 없음).
+- `refactor`: 프로덕션 코드 리팩토링.
+- `test`: 테스트 코드 또는 테스트 리팩토링.
+- `chore`: 빌드 과정 또는 보조 기능 수정.
+- `rename`: 파일이나 폴더 이름 변경 또는 이동.
+- `remove`: 파일 삭제.
+- `comment`: 주석 추가 또는 변경.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+각 커밋 메시지는 변경 내용을 명확히 설명해야 하며, 관련된 이슈를 해결하거나 닫는 경우, `close`, `fixes`, `resolves`와 같은 키워드와 함께 이슈 번호를 포함시킵니다.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+예시: `feat: 사용자 인증 기능 추가 (close #123)`
