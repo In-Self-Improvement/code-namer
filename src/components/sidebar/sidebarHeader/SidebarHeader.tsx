@@ -3,8 +3,13 @@ import React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import './SidebarHeader.css';
 
-const SidebarHeader = ({ onClick }) => (
-  <div className="sidebar_header_container">
+interface SidebarHeaderProps {
+  className?: string;
+  onClick?: () => void;
+}
+
+const SidebarHeader = ({ className, onClick }: SidebarHeaderProps) => (
+  <div className={`sidebar_header_container ${className}`}>
     <div className="sidebar_header">
       <button className="sidebar_toggle" onClick={onClick}>
         <MenuIcon />

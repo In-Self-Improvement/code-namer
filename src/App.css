@@ -28,9 +28,9 @@
   color: #61dafb;
 }
 
-.app-container {
+.isSidebarExpanded {
   display: grid;
-  grid-template-columns: 1fr 8fr;
+  grid-template-columns: 1fr 7fr;
 }
 
 @keyframes App-logo-spin {

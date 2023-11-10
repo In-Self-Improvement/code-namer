@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Router from './Router';
 import Sidebar from './components/sidebar/Sidebar';
+
 const App = () => {
+  const [isSidebarExpanded, setSidebarExpanded] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarExpanded(!isSidebarExpanded);
+    console.log('딸깍', isSidebarExpanded);
+  };
+
   return (
-    <div className="app-container">
-      <Sidebar />
-      <Router />
+    <div className={` ${isSidebarExpanded ? 'isSidebarExpanded' : ''}`}>
+      <Sidebar toggleSidebar={toggleSidebar} />
+      <Router className="main_content" />
     </div>
   );
 };
