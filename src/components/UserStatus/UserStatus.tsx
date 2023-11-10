@@ -8,7 +8,7 @@ import SignOutButton from '~/components/UserStatus/SignOutButton/SignOutButton';
 
 import { auth } from '~/firebase/firebase';
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
-import SignIn from '~/components/signin/SignIn';
+import SignInModal from '~/components/Signin/SignInModal';
 
 const UserStatus = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -47,7 +47,10 @@ const UserStatus = () => {
     <div className="userStatus_container">
       <SignInButton displayName={displayName} onClick={clickSignInButton} />
       {clickSignOut && <SignOutButton onClick={signout} />}
-      <SignIn isOpen={isSignInModalOpen} onRequestClose={closeSignInModal} />
+      <SignInModal
+        isOpen={isSignInModalOpen}
+        onRequestClose={closeSignInModal}
+      />
     </div>
   );
 };
