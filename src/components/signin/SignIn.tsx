@@ -139,14 +139,6 @@ const SignIn = ({ isOpen, onRequestClose }) => {
             >
               구글 계정으로 로그인
             </button>
-
-            <button
-              type="button"
-              onClick={getData}
-              className="bg-gray-500 text-white rounded-md p-3 hover:bg-gray-300 focus:outline-none "
-            >
-              회원가입
-            </button>
           </div>
         </form>
       </Modal>
