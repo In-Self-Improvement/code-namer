@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface IAuthState {
   isLoggedIn: boolean;
@@ -16,7 +16,7 @@ const initialState: IAuthState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     SET_ACTIVE_USER: (state, action) => {

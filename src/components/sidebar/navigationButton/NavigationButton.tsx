@@ -1,9 +1,9 @@
-import React from "react";
-import "./NavigationButton.css";
+import React from 'react';
+import './NavigationButton.css';
 
 const NavigationButton = () => {
   const onClickButton = () => {
-    console.log("clicked button 새로운 이름 추천");
+    console.log('clicked button 새로운 이름 추천');
   };
   return (
     <div className="navigation_button_wrapper">

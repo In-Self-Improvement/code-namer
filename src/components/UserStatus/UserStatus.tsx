@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import "./UserStatus.css";
-import SignInButton from "~/components/UserStatus/SignInButton/SignInButton";
-import SignOutButton from "~/components/UserStatus/SignOutButton/SignOutButton";
+import React, { useState } from 'react';
+import './UserStatus.css';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { signOut } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import SignInButton from '~/components/UserStatus/SignInButton/SignInButton';
+import SignOutButton from '~/components/UserStatus/SignOutButton/SignOutButton';
 
-import { auth } from "~/firebase/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { SET_LOADING } from "~/redux/slice/loadingSlice";
-import SignIn from "~/components/signin/SignIn";
+import { auth } from '~/firebase/firebase';
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
+import SignIn from '~/components/signin/SignIn';
+
 const UserStatus = () => {
   const [user, loading, error] = useAuthState(auth);
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const UserStatus = () => {
   };
 
   const closeSignInModal = () => {
-    console.log("close?");
+    console.log('close?');
 
     setIsSignInModalOpen(false);
   };
@@ -37,7 +38,7 @@ const UserStatus = () => {
         dispatch(SET_LOADING(false));
         clickSignInButton();
       })
-      .catch((error) => {
+      .catch((e) => {
         // toast.error(error.message);
       });
   };

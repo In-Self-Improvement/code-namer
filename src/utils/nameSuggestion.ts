@@ -1,5 +1,6 @@
-export const generateFunctionNameContent = (desc: string): string => {
-  return `저는 함수 이름을 짓고 싶어요.
+export const generateFunctionNameContent = (
+  desc: string
+): string => `저는 함수 이름을 짓고 싶어요.
     아래의 규칙을 지켜서 함수 이름을 지어주세요.
     1. 동사로 작성
     나쁜예: apple(), car()
@@ -23,10 +24,10 @@ export const generateFunctionNameContent = (desc: string): string => {
     ex) isEven\n isNumber\n ... 
     그 외의 답변은 써주지 마세요.
     `;
-};
 
-export const generateVariableNameContent = (desc: string): string => {
-  return `저는 변수 이름을 짓고 싶어요.
+export const generateVariableNameContent = (
+  desc: string
+): string => `저는 변수 이름을 짓고 싶어요.
     아래의 규칙을 지켜서 변수 이름을 지어주세요.
     1. 변수의 이름은 명사로 작성해주세요.
     2. 카멜 표기법 준수해주세요.
@@ -46,4 +47,3 @@ export const generateVariableNameContent = (desc: string): string => {
     ex) count\n length\n ... 
     그 외의 답변은 써주지 마세요.
     `;
-};

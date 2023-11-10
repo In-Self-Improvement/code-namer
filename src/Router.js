@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from "~/components/signup/SignUp";
-import DashBoard from "~/pages/DashBoard";
-import RecommendName from "~/pages/RecommendName/RecommendName";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SignUp from '~/components/signup/SignUp';
+import DashBoard from '~/pages/DashBoard';
+import RecommendName from '~/pages/RecommendName/RecommendName';
 const Router = () => {
   return (
     <BrowserRouter>

@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "~/firebase/firebase";
+} from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import Modal from 'react-modal';
+import firebaseAPI, { auth } from '~/firebase/firebase';
 
-import { useDispatch } from "react-redux";
-import { SET_LOADING } from "~/redux/slice/loadingSlice";
-
-import Cookies from "js-cookie";
-import firebaseAPI from "~/firebase/firebase";
-
-import Modal from "react-modal";
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
 
 const SignIn = ({ isOpen, onRequestClose }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+
+  const saveTokenId = async (tokenId) => {
+    Cookies.set('auth_token', tokenId, { expires: 7, path: '/' });
+  };
+
   const signInSuccess = async () => {
     dispatch(SET_LOADING(false));
     const currentUserTokenId = await auth.currentUser.getIdToken();
@@ -25,11 +27,7 @@ const SignIn = ({ isOpen, onRequestClose }) => {
     onRequestClose();
   };
 
-  const saveTokenId = async (tokenId) => {
-    Cookies.set("auth_token", tokenId, { expires: 7, path: "/" });
-  };
-
-  const signInError = (error: any) => {
+  const signInError = (error: string) => {
     alert(error);
     // TODO: 사용자에게 에러 메시지 표시
     dispatch(SET_LOADING(false));
@@ -50,11 +48,11 @@ const SignIn = ({ isOpen, onRequestClose }) => {
   };
 
   const getData = async () => {
-    const response = await firebaseAPI.get("/test");
+    const response = await firebaseAPI.get('/test');
     if (response.status === 200) {
-      console.log("response.data.documents", response.data.documents);
+      console.log('response.data.documents', response.data.documents);
     } else {
-      console.error("Failed to fetch documents:", response.statusText);
+      console.error('Failed to fetch documents:', response.statusText);
       return null;
     }
   };
@@ -69,21 +67,21 @@ const SignIn = ({ isOpen, onRequestClose }) => {
         onClick={(e) => e.stopPropagation()}
         isOpen={isOpen}
         onRequestClose={onRequestClose}
-        shouldCloseOnOverlayClick={true}
+        shouldCloseOnOverlayClick
         style={{
           content: {
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "auto",
-            height: "auto",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            overflow: "hidden",
-            backgroundColor: "transparent",
-            border: "none",
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 'auto',
+            height: 'auto',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            overflow: 'hidden',
+            backgroundColor: 'transparent',
+            border: 'none',
           },
         }}
       >

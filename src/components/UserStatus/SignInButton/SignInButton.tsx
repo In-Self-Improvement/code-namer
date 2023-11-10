@@ -1,7 +1,7 @@
-import React from "react";
-import "./SignInButton.css";
-import Button from "~/components/Button/Button";
-import PersonIcon from "@mui/icons-material/Person";
+import React from 'react';
+import './SignInButton.css';
+import PersonIcon from '@mui/icons-material/Person';
+import Button from '~/components/Button/Button';
 
 const SignInButton = (props) => {
   const { displayName, onClick } = props;
@@ -9,11 +9,11 @@ const SignInButton = (props) => {
   return (
     <div className="signin_container">
       <Button
-        buttonStyle={{ textAlign: displayName ? "start" : "center" }}
+        buttonStyle={{ textAlign: displayName ? 'start' : 'center' }}
         onClick={onClick}
       >
-        {displayName && <PersonIcon style={{ marginRight: "20px" }} />}
-        {displayName ? displayName : "로그인"}
+        {displayName && <PersonIcon style={{ marginRight: '20px' }} />}
+        {displayName || '로그인'}
       </Button>
     </div>
   );

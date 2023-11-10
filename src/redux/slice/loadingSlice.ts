@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface ILoadingState {
   isLoading: boolean;
@@ -10,7 +10,7 @@ const initialState: ILoadingState = {
 };
 
 const loadingSlice = createSlice({
-  name: "loading",
+  name: 'loading',
   initialState,
   reducers: {
     SET_LOADING: (state, action) => {
