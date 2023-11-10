@@ -1,0 +1,84 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  background-color: transparent;
+  border: none;
+}
+
+.form {
+  background-color: white;
+  padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  width: 384px; /* 24rem */
+}
+
+.h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: black;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4a4a4a;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  color: black;
+}
+
+.input:focus {
+  border-color: #6574cd;
+}
+
+.button {
+  background-color: #38a169;
+  color: white;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.button:hover {
+  background-color: #9ae6b4;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button-google {
+  background-color: #4299e1;
+  color: white;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.button-google:hover {
+  background-color: #90cdf4;
+}
