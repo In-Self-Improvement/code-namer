@@ -8,12 +8,11 @@ const App = () => {
 
   const toggleSidebar = () => {
     setSidebarExpanded(!isSidebarExpanded);
-    console.log('딸깍', isSidebarExpanded);
   };
 
   return (
     <div className={` ${isSidebarExpanded ? 'isSidebarExpanded' : ''}`}>
-      <Sidebar toggleSidebar={toggleSidebar} />
+      <Sidebar onClick={toggleSidebar} />
       <Router className="main_content" />
     </div>
   );

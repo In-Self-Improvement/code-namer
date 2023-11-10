@@ -6,22 +6,22 @@ import NavigationButton from './navigationButton/NavigationButton';
 import UserStatus from '~/components/UserStatus/UserStatus';
 
 interface SidebarProps {
-  toggleSidebar?: () => void;
+  onClick?: () => void;
 }
 
-const Sidebar = ({ toggleSidebar }: SidebarProps) => {
+const Sidebar = ({ onClick }: SidebarProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const toggleSidebar2 = () => {
+  const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    toggleSidebar();
+    onClick();
   };
 
   return (
     <div className={`sidebar_container  ${isSidebarOpen ? 'show' : ''} `}>
-      <SidebarHeader className="isSidebarFolded" onClick={toggleSidebar2} />
+      <SidebarHeader className="isSidebarFolded" onClick={toggleSidebar} />
       <div className={`sidebar_content ${isSidebarOpen ? 'show' : ''}`}>
-        <SidebarHeader className="isSidebarExpanded" onClick={toggleSidebar2} />
+        <SidebarHeader className="isSidebarExpanded" onClick={toggleSidebar} />
         <NavigationButton />
         <SidebarContent />
         <SidebarContent />
