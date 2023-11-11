@@ -77,47 +77,23 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
             alignItems: 'flex-start',
             overflow: 'hidden',
             backgroundColor: 'transparent',
-            border: 'none',
           },
         }}
         className="modal-content"
       >
         <form onSubmit={signInWithEmail} className="form">
-          <h1 className="h1">로그인</h1>
-          <div className="mb-4">
-            <label htmlFor="email" className="label">
-              이메일
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="이메일을 입력하시오"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="label">
-              비밀번호
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="비밀번호를 입력하시오"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <button type="submit" className="button">
-              로그인
-            </button>
+          <header className="login_title">Code Namer</header>
+          <p className="login_subtitle">
+            계정에 로그인 후 <br />
+            <strong>무제한 무료로</strong>
+            이용해보세요.
+          </p>
+
+          <div className="login_button_container">
             <button
               type="button"
               onClick={signInWithGoogle}
-              className="button-google"
+              className="google_login_button"
             >
               구글 계정으로 로그인
             </button>
