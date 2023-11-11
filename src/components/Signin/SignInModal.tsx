@@ -3,6 +3,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
+  GithubAuthProvider,
 } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
@@ -36,6 +37,12 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
   const signInWithGoogle = () => {
     dispatch(SET_LOADING(true));
     const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).then(signInSuccess).catch(signInError);
+  };
+
+  const signInWithGithub = () => {
+    dispatch(SET_LOADING(true));
+    const provider = new GithubAuthProvider();
     signInWithPopup(auth, provider).then(signInSuccess).catch(signInError);
   };
 
@@ -96,6 +103,13 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
               className="google_login_button"
             >
               구글 계정으로 로그인
+            </button>
+            <button
+              type="button"
+              onClick={signInWithGithub}
+              className="github_login_button"
+            >
+              Github 계정으로 로그인
             </button>
           </div>
         </form>
