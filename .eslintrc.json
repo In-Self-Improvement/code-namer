@@ -39,7 +39,7 @@
     "import/resolver": {
       "alias": {
         "map": [["~", "./src/"]],
-        "extensions": [".ts", ".js", ".tsx"]
+        "extensions": [".ts", ".js", ".tsx", ".svg"]
       }
     },
     "react": {
@@ -61,5 +61,6 @@
   "plugins": ["react", "import"],
   "env": {
     "browser": true
-  }
+  },
+  "root": true
 }

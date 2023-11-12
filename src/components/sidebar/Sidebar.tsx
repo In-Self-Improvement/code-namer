@@ -23,8 +23,8 @@ const Sidebar = ({ onClick }: SidebarProps) => {
       <div className={`sidebar_content ${isSidebarOpen ? 'show' : ''}`}>
         <SidebarHeader className="isSidebarExpanded" onClick={toggleSidebar} />
         <NavigationButton />
-        <SidebarContent />
-        <SidebarContent />
+        <SidebarContent type="function" />
+        <SidebarContent type="function" />
         <SidebarContent />
         <SidebarContent />
         <UserStatus />

@@ -12,8 +12,10 @@
       "@components/*": ["src/components/*"],
       "@api/*": ["src/api/*"],
       "@pages/*": ["src/pages/*"],
-      "@redux/*": ["src/redux/*"]
-    }
+      "@redux/*": ["src/redux/*"],
+      "@assets/*": ["src/assets/*"]
+    },
+    "esModuleInterop": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "./typing.d.ts"]
 }
