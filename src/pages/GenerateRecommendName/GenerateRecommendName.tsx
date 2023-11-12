@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './RecommendName.css';
+import './GenerateRecommendName.css';
 import Select from 'react-select';
 import { getName } from '~/api/openai';
 import {

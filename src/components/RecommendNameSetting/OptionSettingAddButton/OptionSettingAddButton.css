@@ -1,0 +1,14 @@
+.option-setting-add-button {
+  padding: 10px 20px;
+  background-color: #808080; /* 회색 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.option-setting-add-button:hover {
+  background-color: #696969; /* 진한 회색 */
+}
