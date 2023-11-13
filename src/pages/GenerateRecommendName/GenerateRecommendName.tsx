@@ -9,7 +9,8 @@ import {
 
 import { postUserData } from '~/api/api';
 import { userSchema } from '~/utils/firebaseSchema';
-
+import { useCheckSignin } from '~/hooks/useAuth';
+import SignInModal from '~/components/Signin/SignInModal';
 type ItemType = {
   value: string;
   label: string;
@@ -18,11 +19,12 @@ type ItemType = {
 const RecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('함수');
   const [desc, setDesc] = useState('');
-
+  const [isSignInModalOpen, setSignInModalOpen] = useState(false);
+  const isSignin = useCheckSignin();
   const changeSelect = (event: { value: string; label: string }) => {
     setSelectedItem(event.value);
   };
-  const setInputExample = (event: React.FormEvent<HTMLFormElement>) => {
+  const setInputExample = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setDesc('짝수인지 아닌지 판별하는 기능');
   };
@@ -35,10 +37,17 @@ const RecommendName = () => {
     return generateVariableNameContent(desc);
   };
 
+  const checkSignin = () => {
+    if (!isSignin && !isSignInModalOpen) {
+      setSignInModalOpen(true);
+    }
+  };
   const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const content = getContent();
-    const name = await getName(content);
+    checkSignin();
+
+    // const name = await getName(content);
   };
 
   const changeDesc = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,8 +61,17 @@ const RecommendName = () => {
     // console.log("user", user);
   };
 
+  const closeSignInModal = () => {
+    setSignInModalOpen(false);
+  };
+
   return (
     <div className="page-container">
+      <SignInModal
+        isOpen={isSignInModalOpen}
+        onRequestClose={closeSignInModal}
+      />
+
       <div className="recommend_name_title">
         <header>기능을 알려주시면</header>
         <header>적절한 이름을 추천해 드려요</header>
@@ -91,8 +109,7 @@ const RecommendName = () => {
 
           <button
             className="recommend_name_example_button"
-            // onClick={setInputExample}
-            onClick={saveData}
+            onClick={setInputExample}
           >
             예시
           </button>

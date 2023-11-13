@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux';
 import SignInButton from '~/components/UserStatus/SignInButton/SignInButton';
 import SignOutButton from '~/components/UserStatus/SignOutButton/SignOutButton';
 
-import { auth } from '~/firebase/firebase';
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
 import SignInModal from '~/components/Signin/SignInModal';
-
+import { useAuth } from '~/hooks/useAuth';
+import { auth } from '~/firebase/firebase';
 const UserStatus = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const { user, loading, error } = useAuth();
   const dispatch = useDispatch();
   const displayName = user ? user.displayName : null;
   const [clickSignOut, setClickSignOut] = useState(false);
