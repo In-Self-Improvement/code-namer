@@ -6,7 +6,7 @@ import MoreButton from './MoreButton/MoreButton';
 const RecommendedName = ({ names, onMoreClick }) => (
   <div className="recommended-name-screen">
     <div className="name-cards">
-      {names.map((name, index) => (
+      {names?.map((name, index) => (
         <RecommendNameCard key={index} name={name} />
       ))}
     </div>

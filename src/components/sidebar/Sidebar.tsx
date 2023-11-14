@@ -4,6 +4,7 @@ import SidebarHeader from './sidebarHeader/SidebarHeader';
 import SidebarContent from './sidebarContent/SidebarContent';
 import NavigationButton from './navigationButton/NavigationButton';
 import UserStatus from '~/components/UserStatus/UserStatus';
+import { getRecommendNameDataForUser } from '~/firebase/firebase';
 
 interface SidebarProps {
   onClick?: () => void;
@@ -11,11 +12,21 @@ interface SidebarProps {
 
 const Sidebar = ({ onClick }: SidebarProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const [content, setContent] = useState([]);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
     onClick();
   };
+  React.useEffect(() => {
+    getRecommendNameDataForUser('test@gmail.com').then((result) => {
+      setContent(result);
+    });
+  }, []);
+
+  React.useEffect(() => {
+    console.log('content', content);
+  }, [content]);
+  // result 를 사용해서 sidebarContent 를 map돌려 주세요.
 
   return (
     <div className={`sidebar_container  ${isSidebarOpen ? 'show' : ''} `}>
@@ -23,10 +34,13 @@ const Sidebar = ({ onClick }: SidebarProps) => {
       <div className={`sidebar_content ${isSidebarOpen ? 'show' : ''}`}>
         <SidebarHeader className="isSidebarExpanded" onClick={toggleSidebar} />
         <NavigationButton />
-        <SidebarContent type="function" />
-        <SidebarContent type="function" />
-        <SidebarContent />
-        <SidebarContent />
+        {content?.map((item) => (
+          <SidebarContent
+            type={item.type}
+            title={item.desc}
+            recommendId={item.recommendId}
+          />
+        ))}
         <UserStatus />
       </div>
     </div>
