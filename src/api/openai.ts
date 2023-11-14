@@ -5,12 +5,12 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
-const getName = async (content: string) => {
+const getName = async (content: string): Promise<string> => {
   const completion = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [{ role: 'system', content }],
   });
-  console.log(completion.choices[0].message);
+  return completion?.choices[0]?.message?.content;
 };
 
 export { getName };
