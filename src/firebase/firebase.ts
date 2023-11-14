@@ -6,8 +6,7 @@ import { getAuth, getIdToken } from 'firebase/auth';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { collection } from 'firebase/firestore';
-import { addDoc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { useAuth } from '~/hooks/useAuth';
+import { addDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -71,6 +70,42 @@ const saveRecommendName = (recommendNameData) => {
   });
 };
 
+const getRecommendNamesFromUser = async (email: string) => {
+  const userDocRef = userCollection(email);
+  const userDoc = await getDoc(userDocRef);
+
+  if (userDoc.exists()) {
+    return userDoc.data().RecommendName;
+  } else {
+    console.log('No such document!');
+  }
+};
+
+const getRecommendNameData = async (recommendNames: string[]) => {
+  const recommendNameData = [];
+
+  for (const name of recommendNames) {
+    const recommendNameDocRef = doc(recommendNameCollection, name);
+    const recommendNameDoc = await getDoc(recommendNameDocRef);
+    if (recommendNameDoc.exists()) {
+      const dataWithRecommendId = Object.assign({}, recommendNameDoc.data(), {
+        recommendId: name,
+      });
+      recommendNameData.push(dataWithRecommendId);
+    } else {
+      console.log(`No such document: ${name}`);
+    }
+  }
+
+  return recommendNameData;
+};
+
+const getRecommendNameDataForUser = async (email: string) => {
+  const recommendNames = await getRecommendNamesFromUser(email);
+  const recommendNameData = await getRecommendNameData(recommendNames);
+  return recommendNameData;
+};
+
 export default firebaseAPI;
 
 export {
@@ -80,4 +115,5 @@ export {
   recommendNameCollection,
   addRecommendNameToUserCollection,
   saveRecommendName,
+  getRecommendNameDataForUser,
 };
