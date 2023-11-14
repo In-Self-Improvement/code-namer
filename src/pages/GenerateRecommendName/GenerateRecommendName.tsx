@@ -9,17 +9,21 @@ import {
 
 import { postUserData } from '~/api/api';
 import { userSchema } from '~/utils/firebaseSchema';
-import { useCheckSignin } from '~/hooks/useAuth';
+import { useCheckSignin, useAuth } from '~/hooks/useAuth';
 import SignInModal from '~/components/Signin/SignInModal';
 type ItemType = {
   value: string;
   label: string;
 };
 
-const RecommendName = () => {
+import { parseByNewLine } from '~/utils/stringParser';
+import { saveRecommendName } from '~/firebase/firebase';
+import { addDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+const GenerateRecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('함수');
   const [desc, setDesc] = useState('');
   const [isSignInModalOpen, setSignInModalOpen] = useState(false);
+  const { user } = useAuth();
   const isSignin = useCheckSignin();
   const changeSelect = (event: { value: string; label: string }) => {
     setSelectedItem(event.value);
@@ -42,29 +46,35 @@ const RecommendName = () => {
       setSignInModalOpen(true);
     }
   };
+  const saveRecommendData2 = (recommendItem: string[]) => {
+    console.log('user', user);
+    const recommendData = {
+      name: `${user.displayName}`,
+      desc: `${desc}`,
+      type: `${selectedItem}`,
+      createdAt: new Date(),
+      recommendName: recommendItem,
+    };
+    saveRecommendName(recommendData);
+  };
   const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const content = getContent();
     checkSignin();
 
-    // const name = await getName(content);
+    const openAIRecommendName = await getName(content);
+    const result = parseByNewLine(openAIRecommendName);
+    console.log('result', result);
+    saveRecommendData2(result);
   };
 
   const changeDesc = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDesc(e.target.value);
   };
 
-  const saveData = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    // const user = userSchema("test");
-    // postUserData(user);
-    // console.log("user", user);
-  };
-
   const closeSignInModal = () => {
     setSignInModalOpen(false);
   };
-
   return (
     <div className="page-container">
       <SignInModal
@@ -119,4 +129,4 @@ const RecommendName = () => {
   );
 };
 
-export default RecommendName;
+export default GenerateRecommendName;

@@ -19,9 +19,9 @@ export const generateFunctionNameContent = (
 
     기능은 ${desc} 입니다.
     5개의 이름을 추천해주세요.
-    이름 마다 \n 로 구분해주세요.
+    이름 마다 \\n 로 구분해주세요.
     이름 앞에 숫자를 붙이지 말아주세요.
-    ex) isEven\n isNumber\n ... 
+    ex) isEven\nisNumber\n ... 
     그 외의 답변은 써주지 마세요.
     `;
 
@@ -42,8 +42,8 @@ export const generateVariableNameContent = (
 
     기능은 ${desc} 입니다
     5개의 이름을 추천해주세요.
-    이름 마다 \n 로 구분해주세요.
+    이름 마다 \\n 로 구분해주세요.
     이름 앞에 숫자를 붙이지 말아주세요.
-    ex) count\n length\n ... 
+    ex) count\nlength\n ... 
     그 외의 답변은 써주지 마세요.
     `;

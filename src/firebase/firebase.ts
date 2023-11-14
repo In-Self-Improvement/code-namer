@@ -1,16 +1,20 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getFirestore } from 'firebase/firestore';
+import { doc, getFirestore } from 'firebase/firestore';
 import { getAuth, getIdToken } from 'firebase/auth';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { collection } from 'firebase/firestore';
+import { addDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { useAuth } from '~/hooks/useAuth';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -24,7 +28,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-const db = getFirestore();
+const db = getFirestore(app);
 const auth = getAuth(app);
 
 const firebaseAPI = axios.create({
@@ -50,6 +54,30 @@ firebaseAPI.interceptors.request.use(
 //   const [user, loading, error] = useAuthState(auth);
 // };
 
+const recommendNameCollection = collection(db, 'RecommendedNames');
+const userCollection = (email: string) => {
+  return doc(db, 'users', email);
+};
+const addRecommendNameToUserCollection = (email: string, docRefId: string) => {
+  updateDoc(userCollection(email), {
+    RecommendName: arrayUnion(docRefId),
+  });
+};
+
+const saveRecommendName = (recommendNameData) => {
+  const user = 'test@gmail.com';
+  addDoc(recommendNameCollection, recommendNameData).then((docRef) => {
+    addRecommendNameToUserCollection(user, docRef.id);
+  });
+};
+
 export default firebaseAPI;
 
-export { db, auth, app };
+export {
+  db,
+  auth,
+  app,
+  recommendNameCollection,
+  addRecommendNameToUserCollection,
+  saveRecommendName,
+};
