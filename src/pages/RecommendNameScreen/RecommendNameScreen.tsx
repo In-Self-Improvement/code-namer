@@ -33,7 +33,6 @@ const RecommendNameScreen = () => {
   const recommendID = queryParams.get('recommendid');
   const info = useSelector(selectAllRecommendNames);
   const content = useSelector(selectRecommendNameByRecommendId(recommendID));
-  console.log('content', info);
 
   const onMoreClick = () => {
     //TODO 추가 데이터 요청 로직 구현
