@@ -18,14 +18,11 @@ const Sidebar = ({ onClick }: SidebarProps) => {
     onClick();
   };
   React.useEffect(() => {
-    getRecommendNameDataForUser('test@gmail.com').then((result) => {
-      setContent(result);
-    });
+    // getRecommendNameDataForUser('test@gmail.com').then((result) => {
+    //   setContent(result);
+    // });
   }, []);
 
-  React.useEffect(() => {
-    console.log('content', content);
-  }, [content]);
   // result 를 사용해서 sidebarContent 를 map돌려 주세요.
 
   return (

@@ -54,14 +54,12 @@ const TextGenerate = () => {
 
   const generateText = async () => {
     const content = assembleContent();
-    console.log('content', content);
 
     dispatch(SET_LOADING(true));
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'system', content }],
     });
-    console.log(completion.choices[0].message);
 
     const answer = convertStringToObject(completion.choices[0].message.content);
     await uploadData(answer);

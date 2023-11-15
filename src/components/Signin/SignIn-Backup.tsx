@@ -47,20 +47,6 @@ const SignIn = ({ isOpen, onRequestClose }) => {
       .catch(signInError);
   };
 
-  const getData = async () => {
-    const response = await firebaseAPI.get('/test');
-    if (response.status === 200) {
-      console.log('response.data.documents', response.data.documents);
-    } else {
-      console.error('Failed to fetch documents:', response.statusText);
-      return null;
-    }
-  };
-
-  const navToSignUp = () => {
-    // SignUp
-  };
-
   return (
     <section className="flex flex-col place-items-center justify-center h-full ">
       <Modal

@@ -41,7 +41,6 @@ firebaseAPI.interceptors.request.use(
       const token = await getIdToken(auth.currentUser);
       Cookies.set('auth_token', token, { expires: 7, path: '/' });
       config.headers.Authorization = `Bearer ${token}`;
-      console.log('token', token);
     } else if (Cookies.get('auth_token')) {
       config.headers.Authorization = `Bearer ${Cookies.get('auth_token')}`;
     }
@@ -77,7 +76,7 @@ const getRecommendNamesFromUser = async (email: string) => {
   if (userDoc.exists()) {
     return userDoc.data().RecommendName;
   } else {
-    console.log('No such document!');
+    //TODO데이터 없음 예외처리
   }
 };
 
@@ -93,7 +92,7 @@ const getRecommendNameData = async (recommendNames: string[]) => {
       });
       recommendNameData.push(dataWithRecommendId);
     } else {
-      console.log(`No such document: ${name}`);
+      // TODO 데이터 없음 예외처리
     }
   }
 
