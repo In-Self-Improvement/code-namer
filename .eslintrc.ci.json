@@ -32,7 +32,8 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-console": "error"
   },
   "settings": {
     "import/extensions": [".js", ".mjs", ".jsx", ".ts", ".mts", ".tsx"],

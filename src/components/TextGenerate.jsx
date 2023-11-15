@@ -62,7 +62,8 @@ const TextGenerate = () => {
     });
 
     const answer = convertStringToObject(completion.choices[0].message.content);
-    await uploadData(answer);
+    // await uploadData(answer);
+    console.log('test!');
     setText(completion.choices[0].message.content);
     dispatch(SET_LOADING(false));
   };
