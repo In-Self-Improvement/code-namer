@@ -3,23 +3,19 @@ import OpenAI from 'openai';
 import { useDispatch } from 'react-redux';
 
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
-import {
-  convertStringToObject,
-  convertToFirestoreFormat,
-} from '~/utils/convert';
 import { updateData, postData, getData, getDataByIndex } from '~/api/api';
 
 const TextGenerate = () => {
-  const [data_type, setDataType] = useState('함수');
-  const [variable_function, setVariableFunction] = useState('함수');
-  const [recommendation_number, setRecommendationNumber] = useState(5);
+  const [dataType, setDataType] = useState('함수');
+  const [variableFunction, setVariableFunction] = useState('함수');
+  const [recommendationNumber, setRecommendationNumber] = useState(5);
   const [functionality, setFunctionality] = useState('');
   const [text, setText] = useState('');
   const [disabledBtn, setDisabledBtn] = useState(true);
   const dispatch = useDispatch();
 
   const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY, // This is also the default, can be omitted
+    // apiKey: process.env.REACT_APP_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true,
   });
 
@@ -42,16 +38,16 @@ const TextGenerate = () => {
 
   const assembleContent =
     () => `당신은 함수 또는 변수 이름을 정말 잘 잣는 사람입니다.
-      저는 ${variable_function} 이름을 짓고 싶어요.
-      데이터 타입은 ${data_type} 입니다
+      저는 ${variableFunction} 이름을 짓고 싶어요.
+      데이터 타입은 ${dataType} 입니다
       기능은 ${functionality} 입니다
-      ${recommendation_number} 개의 이름을 추천해주세요.
+      ${recommendationNumber} 개의 이름을 추천해주세요.
       데이터 파싱하기 쉽게 '!'를 꼭 넣어주세요.
       ex) 1. 추천이름1! 2. 추천이름2! 3. 추천이름3!
       그 외의 답변은 써주지 마세요.
       ex) isEven: 기능 이름
       `;
-
+  console.log('test!');
   const generateText = async () => {
     const content = assembleContent();
 
@@ -61,14 +57,13 @@ const TextGenerate = () => {
       messages: [{ role: 'system', content }],
     });
 
-    const answer = convertStringToObject(completion.choices[0].message.content);
+    const answer = {};
     // await uploadData(answer);
-    console.log('test!');
     setText(completion.choices[0].message.content);
     dispatch(SET_LOADING(false));
   };
   const uploadData = async (recommendedNames) => {
-    const { fields } = convertToFirestoreFormat(recommendedNames);
+    const fields = {};
 
     const data = {
       fields: {
@@ -88,12 +83,7 @@ const TextGenerate = () => {
   };
 
   const checkVaildGenerateBtn = () => {
-    if (
-      data_type &&
-      variable_function &&
-      recommendation_number &&
-      functionality
-    ) {
+    if (dataType && variableFunction && recommendationNumber && functionality) {
       setDisabledBtn(false);
     } else {
       setDisabledBtn(true);
@@ -102,7 +92,7 @@ const TextGenerate = () => {
 
   useEffect(() => {
     checkVaildGenerateBtn();
-  }, [data_type, functionality, recommendation_number, variable_function]);
+  }, [dataType, functionality, recommendationNumber, variableFunction]);
 
   return (
     <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -122,7 +112,7 @@ const TextGenerate = () => {
               <option value="변수">변수</option>
             </select>
           </label>
-          {variable_function !== '함수' && (
+          {variableFunction !== '함수' && (
             <label className="block">
               <span className="text-sm text-gray-700 mb-2 block">
                 데이터 타입

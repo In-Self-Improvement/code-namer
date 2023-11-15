@@ -10,7 +10,7 @@
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [
       "error",
-      { "extensions": [".tsx", ".js"] }
+      { "extensions": [".tsx", ".jsx", ".js", "ts"] }
     ],
     "react/function-component-definition": [
       "error",
@@ -39,7 +39,7 @@
     "import/resolver": {
       "alias": {
         "map": [["~", "./src/"]],
-        "extensions": [".ts", ".js", ".tsx", ".svg"]
+        "extensions": [".ts", ".js", ".jsx", ".tsx", ".svg"]
       }
     },
     "react": {

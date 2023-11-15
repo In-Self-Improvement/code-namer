@@ -24,4 +24,4 @@ jobs:
 
       # Run ESLint
       - name: Run ESLint
-        run: npm run lint -- --config .eslintrc.ci.json
+        run: npm run lint-cicd
