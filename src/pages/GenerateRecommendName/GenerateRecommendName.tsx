@@ -25,7 +25,7 @@ import { parseByNewLine } from '~/utils/stringParser';
 import { saveRecommendName } from '~/firebase/firebase';
 
 const GenerateRecommendName = () => {
-  const [selectedItem, setSelectedItem] = useState('함수');
+  const [selectedItem, setSelectedItem] = useState('');
   const [desc, setDesc] = useState('');
   const [isSignInModalOpen, setSignInModalOpen] = useState(false);
   const isSignin = useSelector(selectIsSignIn);
@@ -41,11 +41,11 @@ const GenerateRecommendName = () => {
     setDesc('짝수인지 아닌지 판별하는 기능');
   };
   const selectItem: ItemType[] = [
-    { value: '함수', label: '함수' },
-    { value: '변수', label: '변수' },
+    { value: 'function', label: '함수' },
+    { value: 'variable', label: '변수' },
   ];
   const getContent = () => {
-    if (selectedItem === '함수') return generateFunctionNameContent(desc);
+    if (selectedItem === 'function') return generateFunctionNameContent(desc);
     return generateVariableNameContent(desc);
   };
 
@@ -54,7 +54,19 @@ const GenerateRecommendName = () => {
       setSignInModalOpen(true);
     }
   };
-  const saveRecommendData2 = (recommendItem: string[]) => {
+  // desc, selectedItem이 있는지 확인하는 함수
+  const checkDescAndSelectedItem = () => {
+    const hasDesc = desc.length > 0;
+    const hasSelectedItem = selectedItem.length > 0;
+
+    if (hasDesc && hasSelectedItem) {
+      return true;
+    } else {
+      alert('기능과 타입을 입력해주세요.');
+      return false;
+    }
+  };
+  const saveRecommendData = (recommendItem: string[]) => {
     const recommendData = {
       name: `${userName}`,
       desc: `${desc}`,
@@ -64,14 +76,17 @@ const GenerateRecommendName = () => {
     };
     saveRecommendName(userEmail, recommendData);
   };
+
   const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const content = getContent();
     checkSignin();
-
-    const openAIRecommendName = await getName(content);
-    const result = parseByNewLine(openAIRecommendName);
-    saveRecommendData2(result);
+    const enableGenerateName = checkDescAndSelectedItem();
+    if (enableGenerateName) {
+      const content = getContent();
+      const openAIRecommendName = await getName(content);
+      const result = parseByNewLine(openAIRecommendName);
+      saveRecommendData(result);
+    }
   };
 
   const changeDesc = (e: React.ChangeEvent<HTMLInputElement>) => {

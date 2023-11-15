@@ -29,6 +29,7 @@ const Sidebar = ({ onClick }: SidebarProps) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['recommendNameData'],
     queryFn: () => getRecommendNameDataForUser(userEmail),
+    enabled: !!userEmail,
   });
 
   const toggleSidebar = () => {
