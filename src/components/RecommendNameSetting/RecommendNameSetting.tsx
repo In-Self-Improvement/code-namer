@@ -24,9 +24,9 @@ const RecommendNameSetting = ({
         <Icon style={iconStyle} className="sidebar_content_item_icon" />
         <p>{description}</p>
       </div>
-      {options.map((option, index) => (
+      {options?.map((option, index) => (
         <SettingOptionCard
-          key={index}
+          key={`${option}${index}`}
           name={option}
           onDelete={onDelete.bind(this, index)}
         />

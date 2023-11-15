@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './GenerateRecommendName.css';
 import Select from 'react-select';
 import { getName } from '~/api/openai';
@@ -7,10 +7,15 @@ import {
   generateVariableNameContent,
 } from '~/utils/nameSuggestion';
 
-import { postUserData } from '~/api/api';
-import { userSchema } from '~/utils/firebaseSchema';
-import { useCheckSignin, useAuth } from '~/hooks/useAuth';
 import SignInModal from '~/components/Signin/SignInModal';
+
+import { useSelector } from 'react-redux';
+import {
+  selectIsSignIn,
+  selectUserID,
+  selectEmail,
+  selectUserName,
+} from '~/redux/slice/authSlice';
 type ItemType = {
   value: string;
   label: string;
@@ -18,13 +23,16 @@ type ItemType = {
 
 import { parseByNewLine } from '~/utils/stringParser';
 import { saveRecommendName } from '~/firebase/firebase';
-import { addDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+
 const GenerateRecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('함수');
   const [desc, setDesc] = useState('');
   const [isSignInModalOpen, setSignInModalOpen] = useState(false);
-  const { user } = useAuth();
-  const isSignin = useCheckSignin();
+  const isSignin = useSelector(selectIsSignIn);
+  const userId = useSelector(selectUserID);
+  const userEmail = useSelector(selectEmail);
+  const userName = useSelector(selectUserName);
+
   const changeSelect = (event: { value: string; label: string }) => {
     setSelectedItem(event.value);
   };
@@ -48,13 +56,13 @@ const GenerateRecommendName = () => {
   };
   const saveRecommendData2 = (recommendItem: string[]) => {
     const recommendData = {
-      name: `${user.displayName}`,
+      name: `${userName}`,
       desc: `${desc}`,
       type: `${selectedItem}`,
       createdAt: new Date(),
       recommendName: recommendItem,
     };
-    saveRecommendName(recommendData);
+    saveRecommendName(userEmail, recommendData);
   };
   const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -73,6 +81,7 @@ const GenerateRecommendName = () => {
   const closeSignInModal = () => {
     setSignInModalOpen(false);
   };
+
   return (
     <div className="page-container">
       <SignInModal

@@ -5,6 +5,15 @@ import SidebarContent from './sidebarContent/SidebarContent';
 import NavigationButton from './navigationButton/NavigationButton';
 import UserStatus from '~/components/UserStatus/UserStatus';
 import { getRecommendNameDataForUser } from '~/firebase/firebase';
+import {
+  selectIsSignIn,
+  selectUserID,
+  selectEmail,
+  selectUserName,
+} from '~/redux/slice/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { SAVE_RECOMMEND_NAME } from '~/redux/slice/recommendNameSlice';
+import { useQuery } from '@tanstack/react-query';
 
 interface SidebarProps {
   onClick?: () => void;
@@ -13,17 +22,26 @@ interface SidebarProps {
 const Sidebar = ({ onClick }: SidebarProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState([]);
+  const isSignin = useSelector(selectIsSignIn);
+  const userEmail = useSelector(selectEmail);
+  const dispatch = useDispatch();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['recommendNameData'],
+    queryFn: () => getRecommendNameDataForUser(userEmail),
+  });
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
     onClick();
   };
-  React.useEffect(() => {
-    // getRecommendNameDataForUser('test@gmail.com').then((result) => {
-    //   setContent(result);
-    // });
-  }, []);
 
-  // result 를 사용해서 sidebarContent 를 map돌려 주세요.
+  React.useEffect(() => {
+    if (isSignin && data) {
+      setContent(data);
+      dispatch(SAVE_RECOMMEND_NAME(data));
+    }
+  }, [isSignin, data]);
 
   return (
     <div className={`sidebar_container  ${isSidebarOpen ? 'show' : ''} `}>
@@ -31,8 +49,9 @@ const Sidebar = ({ onClick }: SidebarProps) => {
       <div className={`sidebar_content ${isSidebarOpen ? 'show' : ''}`}>
         <SidebarHeader className="isSidebarExpanded" onClick={toggleSidebar} />
         <NavigationButton />
-        {content?.map((item) => (
+        {content?.map((item, index) => (
           <SidebarContent
+            key={`${item}${index}`}
             type={item.type}
             title={item.desc}
             recommendId={item.recommendId}
