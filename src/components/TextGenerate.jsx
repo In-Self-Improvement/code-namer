@@ -45,9 +45,9 @@ const TextGenerate = () => {
       데이터 파싱하기 쉽게 '!'를 꼭 넣어주세요.
       ex) 1. 추천이름1! 2. 추천이름2! 3. 추천이름3!
       그 외의 답변은 써주지 마세요.
-      ex) isEven: 기능 이름
+      ex) isEven: 기능 이름g
       `;
-  console.log('test!');
+
   const generateText = async () => {
     const content = assembleContent();
 
