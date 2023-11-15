@@ -32,7 +32,8 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/no-explicit-any": "off" // any를 허용합니다. (추후 끄기)
+    "@typescript-eslint/no-explicit-any": "off", // any를 허용합니다. (추후 끄기)
+    "no-console": "error"
   },
   "settings": {
     "import/extensions": [".js", ".mjs", ".jsx", ".ts", ".mts", ".tsx"],
