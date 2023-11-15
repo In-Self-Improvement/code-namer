@@ -65,6 +65,8 @@ const addRecommendNameToUserCollection = (email: string, docRefId: string) => {
 const saveRecommendName = (email: string, recommendNameData) => {
   addDoc(recommendNameCollection, recommendNameData).then((docRef) => {
     addRecommendNameToUserCollection(email, docRef.id);
+
+    window.location.href = '/result?recommendid=' + docRef.id;
   });
 };
 
