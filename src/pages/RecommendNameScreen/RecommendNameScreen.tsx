@@ -16,7 +16,7 @@ const RecommendNameScreen = () => {
   const description = 'desc';
   const names = ['name1', 'name2', 'name3'];
   const onMoreClick = () => {
-    console.log('onMoreClick');
+    //TODO 추가 데이터 요청 로직 구현
   };
   const [options, setOptions] = useState(['option1', 'option2', 'option3']);
   const [content, setContent] = useState<ContentProps | null>(null);
@@ -35,7 +35,6 @@ const RecommendNameScreen = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const recommendID = queryParams.get('recommendid');
-  console.log('recommendid', recommendID);
 
   React.useEffect(() => {
     getRecommendNameDataForUser('test@gmail.com').then((result) => {

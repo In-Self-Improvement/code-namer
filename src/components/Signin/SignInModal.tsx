@@ -54,16 +54,6 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
       .catch(signInError);
   };
 
-  const getData = async () => {
-    const response = await firebaseAPI.get('/test');
-    if (response.status === 200) {
-      console.log('response.data.documents', response.data.documents);
-    } else {
-      console.error('Failed to fetch documents:', response.statusText);
-      return null;
-    }
-  };
-
   return (
     <section className="section">
       <Modal

@@ -13,7 +13,7 @@ import { auth } from '~/firebase/firebase';
 const UserStatus = () => {
   const { user, loading, error } = useAuth();
   const dispatch = useDispatch();
-  const displayName = user ? user.displayName : null;
+  const displayName = user ? user.displayName : '로그인';
   const [clickSignOut, setClickSignOut] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const clickSignInButton = () => {
@@ -25,8 +25,6 @@ const UserStatus = () => {
   };
 
   const closeSignInModal = () => {
-    console.log('close?');
-
     setIsSignInModalOpen(false);
   };
 

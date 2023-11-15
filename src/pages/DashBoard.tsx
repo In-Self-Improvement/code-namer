@@ -10,7 +10,6 @@ const DashBoard = () => {
   const fetchData = async () => {
     dispatch(SET_LOADING(true));
     const res = await getData('/test');
-    console.log('res', res);
     setData(res);
   };
 

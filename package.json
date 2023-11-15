@@ -53,10 +53,11 @@
     "eject": "craco eject",
     "build:css": "postcss src/index.css -o public/index.css",
     "deploy": "aws s3 sync ./build s3://codenamer --profile=codenamer.net",
-    "lint": "eslint . && echo 'Linting completed successfully!'"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx && echo 'Linting completed successfully!'",
+    "lint-cicd": "eslint . --ext .js,.jsx,.ts,.tsx --config .eslintrc.ci.json && echo 'Linting completed successfully!'"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint"
+    "*.{ts,tsx,js,jsx}": "eslint"
   },
   "eslintConfig": {
     "extends": [

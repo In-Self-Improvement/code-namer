@@ -47,7 +47,6 @@ const GenerateRecommendName = () => {
     }
   };
   const saveRecommendData2 = (recommendItem: string[]) => {
-    console.log('user', user);
     const recommendData = {
       name: `${user.displayName}`,
       desc: `${desc}`,
@@ -64,7 +63,6 @@ const GenerateRecommendName = () => {
 
     const openAIRecommendName = await getName(content);
     const result = parseByNewLine(openAIRecommendName);
-    console.log('result', result);
     saveRecommendData2(result);
   };
 

@@ -4,9 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import './Header.css';
 
 const Header = () => {
-  const openSidebar = () => {
-    console.log('open sidebar');
-  };
+  const openSidebar = () => {};
   return (
     <div className="header_container">
       <button className="header_toggle" onClick={openSidebar}>
