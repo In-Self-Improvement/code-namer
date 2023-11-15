@@ -4,6 +4,18 @@ import RecommendNameSetting from '~/components/RecommendNameSetting/RecommendNam
 import './RecommendNameScreen.css';
 import { useLocation } from 'react-router-dom';
 import { getRecommendNameDataForUser } from '~/firebase/firebase';
+import {
+  selectIsSignIn,
+  selectUserID,
+  selectEmail,
+  selectUserName,
+} from '~/redux/slice/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { SAVE_RECOMMEND_NAME } from '~/redux/slice/recommendNameSlice';
+import {
+  selectAllRecommendNames,
+  selectRecommendNameByRecommendId,
+} from '~/redux/slice/recommendNameSlice';
 
 type ContentProps = {
   desc: string;
@@ -12,14 +24,22 @@ type ContentProps = {
 };
 
 const RecommendNameScreen = () => {
-  const type = 'function';
-  const description = 'desc';
-  const names = ['name1', 'name2', 'name3'];
+  const isSignin = useSelector(selectIsSignIn);
+  const userEmail = useSelector(selectEmail);
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const recommendID = queryParams.get('recommendid');
+  const info = useSelector(selectAllRecommendNames);
+  const content = useSelector(selectRecommendNameByRecommendId(recommendID));
+  console.log('content', info);
+
   const onMoreClick = () => {
     //TODO 추가 데이터 요청 로직 구현
   };
   const [options, setOptions] = useState(['option1', 'option2', 'option3']);
-  const [content, setContent] = useState<ContentProps | null>(null);
+  // const [content, setContent] = useState<ContentProps | null>(null);
 
   const addOption = () => {
     setOptions((prevOptions) => [...prevOptions, 'new option']);
@@ -31,17 +51,6 @@ const RecommendNameScreen = () => {
       ...prevOptions.slice(index + 1),
     ]);
   };
-
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const recommendID = queryParams.get('recommendid');
-
-  React.useEffect(() => {
-    getRecommendNameDataForUser('test@gmail.com').then((result) => {
-      const res = result.filter((item) => item.recommendId === recommendID);
-      setContent(res[0]);
-    });
-  }, []);
 
   return (
     <div className="recommend-name-screen-container">

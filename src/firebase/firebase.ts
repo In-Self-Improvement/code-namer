@@ -62,10 +62,9 @@ const addRecommendNameToUserCollection = (email: string, docRefId: string) => {
   });
 };
 
-const saveRecommendName = (recommendNameData) => {
-  const user = 'test@gmail.com';
+const saveRecommendName = (email: string, recommendNameData) => {
   addDoc(recommendNameCollection, recommendNameData).then((docRef) => {
-    addRecommendNameToUserCollection(user, docRef.id);
+    addRecommendNameToUserCollection(email, docRef.id);
   });
 };
 

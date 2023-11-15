@@ -11,6 +11,7 @@ import Modal from 'react-modal';
 import firebaseAPI, { auth } from '~/firebase/firebase';
 
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
+import { useAuth } from '~/hooks/useAuth';
 import './SignInModal.css';
 const SignInModal = ({ isOpen, onRequestClose }) => {
   const [email, setEmail] = useState('');
@@ -25,6 +26,7 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
     dispatch(SET_LOADING(false));
     const currentUserTokenId = await auth.currentUser.getIdToken();
     saveTokenId(currentUserTokenId);
+
     onRequestClose();
   };
 
