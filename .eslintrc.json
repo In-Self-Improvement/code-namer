@@ -10,7 +10,7 @@
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [
       "error",
-      { "extensions": [".tsx", ".js"] }
+      { "extensions": [".tsx", ".jsx", ".js", "ts"] }
     ],
     "react/function-component-definition": [
       "error",
@@ -19,9 +19,9 @@
     "react/react-in-jsx-scope": "off",
     "max-lines": ["error", 250],
     "comma-dangle": ["error", "always-multiline"],
-    "@typescript-eslint/no-unused-vars": "off", // 사용하지 않는 변수에 대한 경고를 끕니다.
-    "react/prop-types": "off", // PropTypes를 사용하지 않아도 되게 합니다.
-    "react/jsx-props-no-spreading": "off", // props spreading을 허용합니다.
+    "@typescript-eslint/no-unused-vars": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -32,14 +32,14 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/no-explicit-any": "off" // any를 허용합니다. (추후 끄기)
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "settings": {
     "import/extensions": [".js", ".mjs", ".jsx", ".ts", ".mts", ".tsx"],
     "import/resolver": {
       "alias": {
         "map": [["~", "./src/"]],
-        "extensions": [".ts", ".js", ".tsx"]
+        "extensions": [".ts", ".js", ".jsx", ".tsx", ".svg"]
       }
     },
     "react": {
@@ -61,5 +61,6 @@
   "plugins": ["react", "import"],
   "env": {
     "browser": true
-  }
+  },
+  "root": true
 }

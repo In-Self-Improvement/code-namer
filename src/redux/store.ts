@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from './slice/authSlice';
 import loadingReducer from './slice/loadingSlice';
+import recommendNameReducer from './slice/recommendNameSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   loading: loadingReducer,
+  recommendName: recommendNameReducer,
 });
 
 const store = configureStore({

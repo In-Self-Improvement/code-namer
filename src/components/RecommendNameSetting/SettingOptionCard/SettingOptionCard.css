@@ -1,0 +1,43 @@
+.setting-option-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.setting-option-card input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.setting-option-card .off {
+  text-decoration: line-through;
+}
+
+.setting-option-card .button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.setting-option-card button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.setting-option-card button:hover {
+  background-color: #0056b3;
+}
+
+.setting-option-card button:last-child {
+  background-color: #ff0000; /* 빨간색 */
+}
+
+.setting-option-card button:last-child:hover {
+  background-color: #b22222; /* 진한 빨간색 */
+}

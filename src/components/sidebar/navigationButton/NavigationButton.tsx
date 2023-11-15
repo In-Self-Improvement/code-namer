@@ -3,7 +3,7 @@ import './NavigationButton.css';
 
 const NavigationButton = () => {
   const onClickButton = () => {
-    console.log('clicked button 새로운 이름 추천');
+    window.location.href = '/';
   };
   return (
     <div className="navigation_button_wrapper">

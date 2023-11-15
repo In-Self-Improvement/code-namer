@@ -1,0 +1,10 @@
+.recommended-name-screen {
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.name-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

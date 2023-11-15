@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import './RecommendName.css';
+import React, { useState } from 'react';
+import './GenerateRecommendName.css';
 import Select from 'react-select';
 import { getName } from '~/api/openai';
 import {
@@ -7,53 +7,103 @@ import {
   generateVariableNameContent,
 } from '~/utils/nameSuggestion';
 
-import { postUserData } from '~/api/api';
-import { userSchema } from '~/utils/firebaseSchema';
+import SignInModal from '~/components/Signin/SignInModal';
 
+import { useSelector } from 'react-redux';
+import {
+  selectIsSignIn,
+  selectUserID,
+  selectEmail,
+  selectUserName,
+} from '~/redux/slice/authSlice';
 type ItemType = {
   value: string;
   label: string;
 };
 
-const RecommendName = () => {
-  const [selectedItem, setSelectedItem] = useState('함수');
+import { parseByNewLine } from '~/utils/stringParser';
+import { saveRecommendName } from '~/firebase/firebase';
+
+const GenerateRecommendName = () => {
+  const [selectedItem, setSelectedItem] = useState('');
   const [desc, setDesc] = useState('');
+  const [isSignInModalOpen, setSignInModalOpen] = useState(false);
+  const isSignin = useSelector(selectIsSignIn);
+  const userId = useSelector(selectUserID);
+  const userEmail = useSelector(selectEmail);
+  const userName = useSelector(selectUserName);
 
   const changeSelect = (event: { value: string; label: string }) => {
     setSelectedItem(event.value);
   };
-  const setInputExample = (event: React.FormEvent<HTMLFormElement>) => {
+  const setInputExample = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setDesc('짝수인지 아닌지 판별하는 기능');
   };
   const selectItem: ItemType[] = [
-    { value: '함수', label: '함수' },
-    { value: '변수', label: '변수' },
+    { value: 'function', label: '함수' },
+    { value: 'variable', label: '변수' },
   ];
   const getContent = () => {
-    if (selectedItem === '함수') return generateFunctionNameContent(desc);
+    if (selectedItem === 'function') return generateFunctionNameContent(desc);
     return generateVariableNameContent(desc);
+  };
+
+  const checkSignin = () => {
+    if (!isSignin && !isSignInModalOpen) {
+      setSignInModalOpen(true);
+    }
+  };
+  // desc, selectedItem이 있는지 확인하는 함수
+  const checkDescAndSelectedItem = () => {
+    const hasDesc = desc.length > 0;
+    const hasSelectedItem = selectedItem.length > 0;
+
+    if (hasDesc && hasSelectedItem) {
+      return true;
+    } else {
+      alert('기능과 타입을 입력해주세요.');
+      return false;
+    }
+  };
+  const saveRecommendData = (recommendItem: string[]) => {
+    const recommendData = {
+      name: `${userName}`,
+      desc: `${desc}`,
+      type: `${selectedItem}`,
+      createdAt: new Date(),
+      recommendName: recommendItem,
+    };
+    saveRecommendName(userEmail, recommendData);
   };
 
   const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const content = getContent();
-    const name = await getName(content);
+    checkSignin();
+    const enableGenerateName = checkDescAndSelectedItem();
+    if (enableGenerateName) {
+      const content = getContent();
+      const openAIRecommendName = await getName(content);
+      const result = parseByNewLine(openAIRecommendName);
+      saveRecommendData(result);
+    }
   };
 
   const changeDesc = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDesc(e.target.value);
   };
 
-  const saveData = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    // const user = userSchema("test");
-    // postUserData(user);
-    // console.log("user", user);
+  const closeSignInModal = () => {
+    setSignInModalOpen(false);
   };
 
   return (
     <div className="page-container">
+      <SignInModal
+        isOpen={isSignInModalOpen}
+        onRequestClose={closeSignInModal}
+      />
+
       <div className="recommend_name_title">
         <header>기능을 알려주시면</header>
         <header>적절한 이름을 추천해 드려요</header>
@@ -91,8 +141,7 @@ const RecommendName = () => {
 
           <button
             className="recommend_name_example_button"
-            // onClick={setInputExample}
-            onClick={saveData}
+            onClick={setInputExample}
           >
             예시
           </button>
@@ -102,4 +151,4 @@ const RecommendName = () => {
   );
 };
 
-export default RecommendName;
+export default GenerateRecommendName;

@@ -1,16 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getFirestore } from 'firebase/firestore';
+import { doc, getFirestore } from 'firebase/firestore';
 import { getAuth, getIdToken } from 'firebase/auth';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { collection } from 'firebase/firestore';
+import { addDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -24,7 +27,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-const db = getFirestore();
+const db = getFirestore(app);
 const auth = getAuth(app);
 
 const firebaseAPI = axios.create({
@@ -38,7 +41,6 @@ firebaseAPI.interceptors.request.use(
       const token = await getIdToken(auth.currentUser);
       Cookies.set('auth_token', token, { expires: 7, path: '/' });
       config.headers.Authorization = `Bearer ${token}`;
-      console.log('token', token);
     } else if (Cookies.get('auth_token')) {
       config.headers.Authorization = `Bearer ${Cookies.get('auth_token')}`;
     }
@@ -50,6 +52,68 @@ firebaseAPI.interceptors.request.use(
 //   const [user, loading, error] = useAuthState(auth);
 // };
 
+const recommendNameCollection = collection(db, 'RecommendedNames');
+const userCollection = (email: string) => {
+  return doc(db, 'users', email);
+};
+const addRecommendNameToUserCollection = (email: string, docRefId: string) => {
+  updateDoc(userCollection(email), {
+    RecommendName: arrayUnion(docRefId),
+  });
+};
+
+const saveRecommendName = (email: string, recommendNameData) => {
+  addDoc(recommendNameCollection, recommendNameData).then((docRef) => {
+    addRecommendNameToUserCollection(email, docRef.id);
+
+    window.location.href = '/result?recommendid=' + docRef.id;
+  });
+};
+
+const getRecommendNamesFromUser = async (email: string) => {
+  const userDocRef = userCollection(email);
+  const userDoc = await getDoc(userDocRef);
+
+  if (userDoc.exists()) {
+    return userDoc.data().RecommendName;
+  } else {
+    //TODO데이터 없음 예외처리
+  }
+};
+
+const getRecommendNameData = async (recommendNames: string[]) => {
+  const recommendNameData = [];
+
+  for (const name of recommendNames) {
+    const recommendNameDocRef = doc(recommendNameCollection, name);
+    const recommendNameDoc = await getDoc(recommendNameDocRef);
+    if (recommendNameDoc.exists()) {
+      const dataWithRecommendId = Object.assign({}, recommendNameDoc.data(), {
+        recommendId: name,
+      });
+      recommendNameData.push(dataWithRecommendId);
+    } else {
+      // TODO 데이터 없음 예외처리
+    }
+  }
+
+  return recommendNameData;
+};
+
+const getRecommendNameDataForUser = async (email: string) => {
+  const recommendNames = await getRecommendNamesFromUser(email);
+  const recommendNameData = await getRecommendNameData(recommendNames);
+  return recommendNameData;
+};
+
 export default firebaseAPI;
 
-export { db, auth, app };
+export {
+  db,
+  auth,
+  app,
+  recommendNameCollection,
+  addRecommendNameToUserCollection,
+  saveRecommendName,
+  getRecommendNameDataForUser,
+};
