@@ -53,7 +53,7 @@ const RecommendNameScreen = () => {
       content?.recommendName
     );
   };
-  const generateName = async () => {
+  const generateAdditionalName = async () => {
     const newContent = getContent();
 
     const openAIRecommendName = await getName(newContent);
@@ -63,7 +63,7 @@ const RecommendNameScreen = () => {
   };
   const onMoreClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    generateName();
+    generateAdditionalName();
   };
   const [options, setOptions] = useState(['option1', 'option2', 'option3']);
   // const [content, setContent] = useState<ContentProps | null>(null);
