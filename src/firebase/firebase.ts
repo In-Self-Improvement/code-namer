@@ -56,6 +56,9 @@ const recommendNameCollection = collection(db, 'RecommendedNames');
 const userCollection = (email: string) => {
   return doc(db, 'users', email);
 };
+const recommendNameCollectionForUpdate = (recommendId: string) => {
+  return doc(db, 'RecommendedNames', recommendId);
+};
 const addRecommendNameToUserCollection = (email: string, docRefId: string) => {
   updateDoc(userCollection(email), {
     RecommendName: arrayUnion(docRefId),
@@ -68,6 +71,16 @@ const saveRecommendName = (email: string, recommendNameData) => {
 
     window.location.href = '/result?recommendid=' + docRef.id;
   });
+};
+
+const updateRecommendName = async (docId: string, recommendNameData) => {
+  const recommendNameRef = doc(recommendNameCollection, docId);
+  const { recommendName, lastUpdated } = recommendNameData;
+  await updateDoc(recommendNameRef, {
+    lastUpdated,
+    recommendName: arrayUnion(...recommendName),
+  });
+  window.location.reload();
 };
 
 const getRecommendNamesFromUser = async (email: string) => {
@@ -116,4 +129,5 @@ export {
   addRecommendNameToUserCollection,
   saveRecommendName,
   getRecommendNameDataForUser,
+  updateRecommendName,
 };
