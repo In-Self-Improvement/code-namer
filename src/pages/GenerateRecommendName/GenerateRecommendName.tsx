@@ -23,6 +23,7 @@ type ItemType = {
 
 import { parseByNewLine } from '~/utils/stringParser';
 import { saveRecommendName } from '~/firebase/firebase';
+import { toastSuccessMessage } from '~/utils/toastMessage';
 
 const GenerateRecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('');
@@ -36,9 +37,11 @@ const GenerateRecommendName = () => {
   const changeSelect = (event: { value: string; label: string }) => {
     setSelectedItem(event.value);
   };
+
   const setInputExample = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setDesc('짝수인지 아닌지 판별하는 기능');
+    toastSuccessMessage('예시가 입력되었습니다.');
   };
   const selectItem: ItemType[] = [
     { value: 'function', label: '함수' },
