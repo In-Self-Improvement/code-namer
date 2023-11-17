@@ -1,9 +1,8 @@
-/* .sidebar_header_container {
+/* .sidebar_header_container { 
 } */
-
 .sidebar_header {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 200px;
 }
