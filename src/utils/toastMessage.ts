@@ -65,4 +65,8 @@ const toastSuccessMessage = (message: string, duration?: number): void => {
   toastMessageContainer({ message, type: 'success', duration });
 };
 
-export { toastSuccessMessage };
+const toastErrorMessage = (message: string, duration?: number): void => {
+  toastMessageContainer({ message, type: 'error', duration });
+};
+
+export { toastSuccessMessage, toastErrorMessage };
