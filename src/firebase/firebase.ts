@@ -66,7 +66,7 @@ const userCollection = (email: string) => {
 
 const saveOrUpdateUser = async (email: string, userData) => {
   if (!email) {
-    console.error('Error: email is null or undefined');
+    toastErrorMessage('로그인에 실패하였습니다');
     return;
   }
   const userDocRef = userCollection(email);
