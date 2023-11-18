@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithEmailAndPassword,
   GithubAuthProvider,
 } from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import Modal from 'react-modal';
-import firebaseAPI, { auth, saveOrUpdateUser } from '~/firebase/firebase';
+import { auth, saveOrUpdateUser } from '~/firebase/firebase';
 
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
 import './SignInModal.css';
 const SignInModal = ({ isOpen, onRequestClose }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const saveTokenId = async () => {
     const currentUserTokenId = await auth.currentUser.getIdToken();
@@ -61,14 +58,6 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
     signInWithPopup(auth, provider).then(signInSuccess).catch(signInError);
   };
 
-  const signInWithEmail = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    dispatch(SET_LOADING(true));
-    signInWithEmailAndPassword(auth, email, password)
-      .then(signInSuccess)
-      .catch(signInError);
-  };
-
   return (
     <section className="section">
       <Modal
@@ -93,7 +82,7 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
         }}
         className="modal-content"
       >
-        <form onSubmit={signInWithEmail} className="form">
+        <form className="form">
           <header className="login_title">Code Namer</header>
           <p className="login_subtitle">
             계정에 로그인 후 <br />
