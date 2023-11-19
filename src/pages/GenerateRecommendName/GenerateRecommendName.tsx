@@ -91,8 +91,6 @@ const GenerateRecommendName = () => {
     const enableGenerateName = checkDescAndSelectedItem();
     if (enableGenerateName) {
       const content = getContent();
-      console.log('content', content);
-
       const openAIRecommendName = await getName(content);
       const result = parseByNewLine(openAIRecommendName);
       saveRecommendData(result);
