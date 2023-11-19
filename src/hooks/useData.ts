@@ -16,13 +16,9 @@ export const useUpdateRecommendNameData = () => {
       recommendData: any;
     }) => updateRecommendName(recommendID, recommendData),
     onSuccess: () => {
-      console.log('onSucess');
-
       queryClient.invalidateQueries({ queryKey: ['recommendNameData'] });
     },
-    onError: (error) => {
-      console.log('mutation error', error);
-    },
+    onError: (error) => {},
   });
 };
 
@@ -40,8 +36,6 @@ export const useUpdateRecommendNameOptions = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recommendNameData'] });
     },
-    onError: (error) => {
-      console.log('mutation error', error);
-    },
+    onError: (error) => {},
   });
 };
