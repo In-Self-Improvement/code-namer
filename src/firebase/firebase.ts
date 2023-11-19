@@ -114,7 +114,6 @@ const updateRecommendName = async (docId: string, recommendNameData) => {
     lastUpdated,
     recommendName: arrayUnion(...recommendName),
   });
-  window.location.reload();
 };
 
 const updateRecommendNameOptions = async (docId: string, options: string[]) => {
@@ -124,7 +123,6 @@ const updateRecommendNameOptions = async (docId: string, options: string[]) => {
     lastUpdated: Date.now(),
     options,
   });
-  window.location.reload();
 };
 
 const getRecommendNamesFromUser = async (email: string) => {

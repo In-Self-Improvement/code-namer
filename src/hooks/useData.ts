@@ -1,42 +1,41 @@
-import { useQuery, useMutation, useQueryClient } from 'react-query';
-import * as api from '~/api/api';
-import * as openai from '~/api/openai';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  updateRecommendName,
+  updateRecommendNameOptions,
+} from '~/firebase/firebase';
 
-export const useGetData = (db) =>
-  useQuery(['data', db], () => api.getData(db), {
-    staleTime: 1000 * 60 * 5,
-  });
-
-// 데이터를 추가하는 커스텀 훅
-export const usePostData = (db) => {
+export const useUpdateRecommendNameData = () => {
   const queryClient = useQueryClient();
 
-  return useMutation((data) => api.postData(db, data), {
+  return useMutation({
+    mutationFn: ({
+      recommendID,
+      recommendData,
+    }: {
+      recommendID: string;
+      recommendData: any;
+    }) => updateRecommendName(recommendID, recommendData),
     onSuccess: () => {
-      // 성공 시 캐시 무효화
-      queryClient.invalidateQueries(['data', db]);
+      queryClient.invalidateQueries({ queryKey: ['recommendNameData'] });
     },
+    onError: (error) => {},
   });
 };
 
-// 데이터를 업데이트하는 커스텀 훅
-export const useUpdateData = (db) => {
+export const useUpdateRecommendNameOptions = () => {
   const queryClient = useQueryClient();
 
-  return useMutation((data) => api.updateData(db, data), {
+  return useMutation({
+    mutationFn: ({
+      recommendID,
+      options,
+    }: {
+      recommendID: string;
+      options: string[];
+    }) => updateRecommendNameOptions(recommendID, options),
     onSuccess: () => {
-      queryClient.invalidateQueries(['data', db]);
+      queryClient.invalidateQueries({ queryKey: ['recommendNameData'] });
     },
+    onError: (error) => {},
   });
 };
-
-// 인덱스로 데이터를 가져오는 커스텀 훅
-export const useGetDataByIndex = (db, index) =>
-  useQuery(['dataByIndex', db, index], () => api.getDataByIndex(db, index), {
-    // 옵션
-  });
-
-export const useGetName = (content) =>
-  useQuery(['name'], () => openai.getName(content), {
-    staleTime: 1000 * 60 * 5,
-  });

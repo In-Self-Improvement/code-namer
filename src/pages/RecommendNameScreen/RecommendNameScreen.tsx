@@ -3,10 +3,6 @@ import RecommendName from '~/components/RecommendName/RecommendName';
 import RecommendNameSetting from '~/components/RecommendNameSetting/RecommendNameSetting';
 import './RecommendNameScreen.css';
 import { useLocation } from 'react-router-dom';
-import {
-  updateRecommendName,
-  updateRecommendNameOptions,
-} from '~/firebase/firebase';
 import { selectIsSignIn, selectEmail } from '~/redux/slice/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -19,7 +15,10 @@ import {
 } from '~/utils/nameSuggestion';
 import { getName } from '~/api/openai';
 import { parseAndRemoveNumberPrefixes } from '~/utils/stringParser';
-
+import {
+  useUpdateRecommendNameData,
+  useUpdateRecommendNameOptions,
+} from '~/hooks/useData';
 type ContentProps = {
   desc: string;
   recommendName: string[];
@@ -36,13 +35,14 @@ const RecommendNameScreen = () => {
   const recommendID = queryParams.get('recommendid');
   const info = useSelector(selectAllRecommendNames);
   const content = useSelector(selectRecommendNameByRecommendId(recommendID));
-
+  const recommendNameMutation = useUpdateRecommendNameData();
+  const optionMutation = useUpdateRecommendNameOptions();
   const updateRecommendNameData = (recommendItem: string[]) => {
     const recommendData = {
       lastUpdated: new Date(),
       recommendName: recommendItem,
     };
-    updateRecommendName(recommendID, recommendData);
+    recommendNameMutation.mutate({ recommendID, recommendData });
   };
   const getContent = () => {
     if (content.type === 'function')
@@ -69,26 +69,22 @@ const RecommendNameScreen = () => {
     event.preventDefault();
     generateAdditionalName();
   };
-  // const [content, setContent] = useState<ContentProps | null>(null);
 
   const onAddOption = () => {
-    // setOptions((prevOptions) => [...prevOptions, 'new option']);
-    updateRecommendNameOptions(recommendID, [
-      ...content.options,
-      '새로운 옵션',
-    ]);
+    const newOptions = [...content.options, '새로운 옵션'];
+    optionMutation.mutate({ recommendID, options: newOptions });
   };
 
   const onEdit = (index: number, value: string) => {
     const newOptions = [...content.options];
     newOptions.splice(index, 1, value);
-    updateRecommendNameOptions(recommendID, newOptions);
+    optionMutation.mutate({ recommendID, options: newOptions });
   };
 
   const onDelete = (index: number) => {
     const newOptions = [...content.options];
     newOptions.splice(index, 1);
-    updateRecommendNameOptions(recommendID, newOptions);
+    optionMutation.mutate({ recommendID, options: newOptions });
   };
 
   return (
