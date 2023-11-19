@@ -17,9 +17,8 @@ import {
   generateAdditionalFunctionNameContent,
   generateAdditionalVariableNameContent,
 } from '~/utils/nameSuggestion';
-import { parseByNewLine } from '~/utils/stringParser';
 import { getName } from '~/api/openai';
-import { removeNumberPrefixes } from '~/utils/removeNumber';
+import { parseAndRemoveNumberPrefixes } from '~/utils/stringParser';
 
 type ContentProps = {
   desc: string;
@@ -58,17 +57,12 @@ const RecommendNameScreen = () => {
       content?.options
     );
   };
-  const refineRecommendName = (recommendName: string) => {
-    const newRecommendName = removeNumberPrefixes(recommendName);
-    const result = parseByNewLine(newRecommendName);
-    return result;
-  };
 
   const generateAdditionalName = async () => {
     const newContent = getContent();
 
     const openAIRecommendName = await getName(newContent);
-    const result = refineRecommendName(openAIRecommendName);
+    const result = parseAndRemoveNumberPrefixes(openAIRecommendName);
     updateRecommendNameData(result);
   };
   const onMoreClick = (event: React.MouseEvent<HTMLButtonElement>) => {
