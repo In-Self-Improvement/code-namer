@@ -92,8 +92,6 @@ const GenerateRecommendName = () => {
     if (enableGenerateName) {
       const content = getContent();
       const openAIRecommendName = await getName(content);
-      console.log('openAIRecommendName', openAIRecommendName);
-
       const result = parseAndRemoveNumberPrefixes(openAIRecommendName);
       saveRecommendData(result);
     }
