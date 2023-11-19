@@ -21,11 +21,11 @@ type ItemType = {
   label: string;
 };
 
-import { parseByNewLine } from '~/utils/stringParser';
 import { saveRecommendName } from '~/firebase/firebase';
 import { toastErrorMessage, toastSuccessMessage } from '~/utils/toastMessage';
 import { useNavigate } from 'react-router-dom';
 import { nameSuggestionOption } from '~/utils/nameSuggestionOption';
+import { parseAndRemoveNumberPrefixes } from '~/utils/stringParser';
 const GenerateRecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('');
   const [desc, setDesc] = useState('');
@@ -92,7 +92,7 @@ const GenerateRecommendName = () => {
     if (enableGenerateName) {
       const content = getContent();
       const openAIRecommendName = await getName(content);
-      const result = parseByNewLine(openAIRecommendName);
+      const result = parseAndRemoveNumberPrefixes(openAIRecommendName);
       saveRecommendData(result);
     }
   };
