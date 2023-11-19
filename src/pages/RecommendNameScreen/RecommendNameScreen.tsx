@@ -58,12 +58,17 @@ const RecommendNameScreen = () => {
       content?.options
     );
   };
+  const refineRecommendName = (recommendName: string) => {
+    const newRecommendName = removeNumberPrefixes(recommendName);
+    const result = parseByNewLine(newRecommendName);
+    return result;
+  };
+
   const generateAdditionalName = async () => {
     const newContent = getContent();
 
     const openAIRecommendName = await getName(newContent);
-    const removeNumberRecommendName = removeNumberPrefixes(openAIRecommendName);
-    const result = parseByNewLine(removeNumberRecommendName);
+    const result = refineRecommendName(openAIRecommendName);
     updateRecommendNameData(result);
   };
   const onMoreClick = (event: React.MouseEvent<HTMLButtonElement>) => {

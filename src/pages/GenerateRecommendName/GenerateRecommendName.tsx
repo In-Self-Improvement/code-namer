@@ -26,6 +26,7 @@ import { saveRecommendName } from '~/firebase/firebase';
 import { toastErrorMessage, toastSuccessMessage } from '~/utils/toastMessage';
 import { useNavigate } from 'react-router-dom';
 import { nameSuggestionOption } from '~/utils/nameSuggestionOption';
+import { removeNumberPrefixes } from '~/utils/removeNumber';
 const GenerateRecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('');
   const [desc, setDesc] = useState('');
@@ -85,6 +86,12 @@ const GenerateRecommendName = () => {
     saveRecommendName(userEmail, recommendData);
   };
 
+  const refineRecommendName = (recommendName: string) => {
+    const newRecommendName = removeNumberPrefixes(recommendName);
+    const result = parseByNewLine(newRecommendName);
+    return result;
+  };
+
   const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     checkSignin();
@@ -92,7 +99,7 @@ const GenerateRecommendName = () => {
     if (enableGenerateName) {
       const content = getContent();
       const openAIRecommendName = await getName(content);
-      const result = parseByNewLine(openAIRecommendName);
+      const result = refineRecommendName(openAIRecommendName);
       saveRecommendData(result);
     }
   };
