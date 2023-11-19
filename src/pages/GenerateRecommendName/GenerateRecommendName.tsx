@@ -23,8 +23,9 @@ type ItemType = {
 
 import { parseByNewLine } from '~/utils/stringParser';
 import { saveRecommendName } from '~/firebase/firebase';
-import { toastSuccessMessage } from '~/utils/toastMessage';
-
+import { toastErrorMessage, toastSuccessMessage } from '~/utils/toastMessage';
+import { useNavigate } from 'react-router-dom';
+import { nameSuggestionOption } from '~/utils/nameSuggestionOption';
 const GenerateRecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('');
   const [desc, setDesc] = useState('');
@@ -64,8 +65,11 @@ const GenerateRecommendName = () => {
 
     if (hasDesc && hasSelectedItem) {
       return true;
+    } else if (!hasSelectedItem) {
+      toastErrorMessage('선택된 항목이 없습니다.');
+      return false;
     } else {
-      alert('기능과 타입을 입력해주세요.');
+      toastErrorMessage('기능을 입력해주세요.');
       return false;
     }
   };
@@ -76,6 +80,7 @@ const GenerateRecommendName = () => {
       type: `${selectedItem}`,
       createdAt: new Date(),
       recommendName: recommendItem,
+      options: nameSuggestionOption,
     };
     saveRecommendName(userEmail, recommendData);
   };

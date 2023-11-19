@@ -117,6 +117,16 @@ const updateRecommendName = async (docId: string, recommendNameData) => {
   window.location.reload();
 };
 
+const updateRecommendNameOptions = async (docId: string, options: string[]) => {
+  const recommendNameRef = doc(recommendNameCollection, docId);
+
+  await updateDoc(recommendNameRef, {
+    lastUpdated: Date.now(),
+    options,
+  });
+  window.location.reload();
+};
+
 const getRecommendNamesFromUser = async (email: string) => {
   const userDocRef = userCollection(email);
   const userDoc = await getDoc(userDocRef);
@@ -165,4 +175,5 @@ export {
   getRecommendNameDataForUser,
   updateRecommendName,
   saveOrUpdateUser,
+  updateRecommendNameOptions,
 };

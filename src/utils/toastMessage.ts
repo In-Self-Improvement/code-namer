@@ -60,6 +60,9 @@ const toastMessageContainer = ({
     });
   }
 };
+const toastMessage = (message: string, duration?: number): void => {
+  toastMessageContainer({ message, type: 'default', duration });
+};
 
 const toastSuccessMessage = (message: string, duration?: number): void => {
   toastMessageContainer({ message, type: 'success', duration });
@@ -69,4 +72,4 @@ const toastErrorMessage = (message: string, duration?: number): void => {
   toastMessageContainer({ message, type: 'error', duration });
 };
 
-export { toastSuccessMessage, toastErrorMessage };
+export { toastSuccessMessage, toastErrorMessage, toastMessage };

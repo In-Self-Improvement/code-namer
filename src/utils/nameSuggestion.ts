@@ -31,7 +31,8 @@ export const generateFunctionNameContent = (desc: string): string => {
 
 export const generateAdditionalFunctionNameContent = (
   desc: string,
-  recommendName: string[]
+  recommendName: string[],
+  options: string[]
 ) => {
   return `저는 함수 이름을 짓고 싶어요.
   아래의 규칙을 지켜서 함수 이름을 지어주세요.
@@ -43,7 +44,7 @@ export const generateAdditionalFunctionNameContent = (
   옳은 예) isEven\nisNumber\n ... 
   그 외의 답변은 써주지 마세요.
 
-  1. 동사로 작성
+  1. 동사로 시작
   나쁜예: apple(), car()
   좋은예: run(), getElement();
   2. Private 메소드라면
@@ -57,6 +58,8 @@ export const generateAdditionalFunctionNameContent = (
   7. 의미가 있는 이름이여야 하고, 의도가 분명해야합니다.
   8. 한 개념에 한 단어를 사용해주세요.
   9. 이름은 영어로 작성해주세요.
+  추가적으로 아래의 규칙을 지켜주세요.
+  ${options.join(', ')}
 
   기능은 ${desc} 입니다.
   아래의 이름의 목록은 제외하고 추천해주세요.
@@ -95,7 +98,8 @@ export const generateVariableNameContent = (desc: string): string => {
 
 export const generateAdditionalVariableNameContent = (
   desc: string,
-  recommendName: string[]
+  recommendName: string[],
+  options: string[]
 ): string => {
   return `저는 변수 이름을 짓고 싶어요.
   아래의 규칙을 지켜서 변수 이름을 지어주세요.
@@ -118,6 +122,9 @@ export const generateAdditionalVariableNameContent = (
   8. 줄임말은 사용하지 말아주세요.
   9. 한 개념에 한 단어를 사용해주세요.
   10. 이름은 영어로 작성해주세요.
+  추가적으로 아래의 규칙을 지켜주세요.
+  ${options.join(', ')}
+
 
   기능은 ${desc} 입니다
   아래의 이름의 목록은 제외하고 추천해주세요.
