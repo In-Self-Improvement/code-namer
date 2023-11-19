@@ -1,32 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithEmailAndPassword,
   GithubAuthProvider,
 } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import Modal from 'react-modal';
-import firebaseAPI, { auth } from '~/firebase/firebase';
+import { auth, saveOrUpdateUser } from '~/firebase/firebase';
 
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
-import { useAuth } from '~/hooks/useAuth';
 import './SignInModal.css';
 const SignInModal = ({ isOpen, onRequestClose }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-
-  const saveTokenId = async (tokenId) => {
-    Cookies.set('auth_token', tokenId, { expires: 7, path: '/' });
+  const saveTokenId = async () => {
+    const currentUserTokenId = await auth.currentUser.getIdToken();
+    Cookies.set('auth_token', currentUserTokenId, { expires: 7, path: '/' });
   };
 
-  const signInSuccess = async () => {
-    dispatch(SET_LOADING(false));
-    const currentUserTokenId = await auth.currentUser.getIdToken();
-    saveTokenId(currentUserTokenId);
+  const updateUserDB = (user) => {
+    const uid = user.uid;
+    const displayName = user.displayName;
+    const userEmail = user.email;
 
+    const userData = {
+      uid,
+      userName: displayName,
+      createAt: Date.now(),
+      lastUpdated: Date.now(),
+      status: 'active',
+    };
+    saveOrUpdateUser(userEmail, userData);
+  };
+
+  const signInSuccess = async (docRef) => {
+    dispatch(SET_LOADING(false));
+    saveTokenId();
+    updateUserDB(docRef.user);
     onRequestClose();
   };
 
@@ -35,9 +45,9 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
     // TODO: 사용자에게 에러 메시지 표시
     dispatch(SET_LOADING(false));
   };
-
   const signInWithGoogle = () => {
     dispatch(SET_LOADING(true));
+
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then(signInSuccess).catch(signInError);
   };
@@ -46,14 +56,6 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
     dispatch(SET_LOADING(true));
     const provider = new GithubAuthProvider();
     signInWithPopup(auth, provider).then(signInSuccess).catch(signInError);
-  };
-
-  const signInWithEmail = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    dispatch(SET_LOADING(true));
-    signInWithEmailAndPassword(auth, email, password)
-      .then(signInSuccess)
-      .catch(signInError);
   };
 
   return (
@@ -80,7 +82,7 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
         }}
         className="modal-content"
       >
-        <form onSubmit={signInWithEmail} className="form">
+        <form className="form">
           <header className="login_title">Code Namer</header>
           <p className="login_subtitle">
             계정에 로그인 후 <br />
