@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Sidebar.css';
 import SidebarHeader from './sidebarHeader/SidebarHeader';
 import SidebarContent from './sidebarContent/SidebarContent';
@@ -14,6 +14,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { SAVE_RECOMMEND_NAME } from '~/redux/slice/recommendNameSlice';
 import { useQuery } from '@tanstack/react-query';
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
 
 interface SidebarProps {
   onClick?: () => void;
@@ -37,10 +38,12 @@ const Sidebar = ({ onClick }: SidebarProps) => {
     onClick();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    dispatch(SET_LOADING(true));
     if (isSignin && data) {
       setContent(data);
       dispatch(SAVE_RECOMMEND_NAME(data));
+      dispatch(SET_LOADING(false));
     }
   }, [isSignin, data]);
 

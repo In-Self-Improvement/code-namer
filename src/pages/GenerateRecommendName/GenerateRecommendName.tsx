@@ -9,7 +9,7 @@ import {
 
 import SignInModal from '~/components/Signin/SignInModal';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectIsSignIn,
   selectUserID,
@@ -21,9 +21,12 @@ type ItemType = {
   label: string;
 };
 
-import { parseByNewLine } from '~/utils/stringParser';
 import { saveRecommendName } from '~/firebase/firebase';
-
+import { toastErrorMessage, toastSuccessMessage } from '~/utils/toastMessage';
+import { useNavigate } from 'react-router-dom';
+import { nameSuggestionOption } from '~/utils/nameSuggestionOption';
+import { parseAndRemoveNumberPrefixes } from '~/utils/stringParser';
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
 const GenerateRecommendName = () => {
   const [selectedItem, setSelectedItem] = useState('');
   const [desc, setDesc] = useState('');
@@ -32,13 +35,15 @@ const GenerateRecommendName = () => {
   const userId = useSelector(selectUserID);
   const userEmail = useSelector(selectEmail);
   const userName = useSelector(selectUserName);
-
+  const dispatch = useDispatch();
   const changeSelect = (event: { value: string; label: string }) => {
     setSelectedItem(event.value);
   };
+
   const setInputExample = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setDesc('짝수인지 아닌지 판별하는 기능');
+    toastSuccessMessage('예시가 입력되었습니다.');
   };
   const selectItem: ItemType[] = [
     { value: 'function', label: '함수' },
@@ -61,8 +66,11 @@ const GenerateRecommendName = () => {
 
     if (hasDesc && hasSelectedItem) {
       return true;
+    } else if (!hasSelectedItem) {
+      toastErrorMessage('선택된 항목이 없습니다.');
+      return false;
     } else {
-      alert('기능과 타입을 입력해주세요.');
+      toastErrorMessage('기능을 입력해주세요.');
       return false;
     }
   };
@@ -73,20 +81,23 @@ const GenerateRecommendName = () => {
       type: `${selectedItem}`,
       createdAt: new Date(),
       recommendName: recommendItem,
+      options: nameSuggestionOption,
     };
     saveRecommendName(userEmail, recommendData);
   };
 
   const generateName = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    dispatch(SET_LOADING(true));
     checkSignin();
     const enableGenerateName = checkDescAndSelectedItem();
     if (enableGenerateName) {
       const content = getContent();
       const openAIRecommendName = await getName(content);
-      const result = parseByNewLine(openAIRecommendName);
+      const result = parseAndRemoveNumberPrefixes(openAIRecommendName);
       saveRecommendData(result);
     }
+    dispatch(SET_LOADING(false));
   };
 
   const changeDesc = (e: React.ChangeEvent<HTMLInputElement>) => {

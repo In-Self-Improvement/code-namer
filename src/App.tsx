@@ -3,7 +3,7 @@ import './App.css';
 import Router from './Router';
 import Sidebar from './components/sidebar/Sidebar';
 import Modal from 'react-modal';
-
+import { ToastContainer } from 'react-toastify';
 Modal.setAppElement('#root');
 
 const App = () => {
@@ -17,6 +17,7 @@ const App = () => {
     <div className={` ${isSidebarExpanded ? 'isSidebarExpanded' : ''}`}>
       <Sidebar onClick={toggleSidebar} />
       <Router className="main_content" />
+      <ToastContainer autoClose={5000} />
     </div>
   );
 };

@@ -6,7 +6,14 @@ import { getAuth, getIdToken } from 'firebase/auth';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { collection } from 'firebase/firestore';
-import { addDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import {
+  addDoc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  setDoc,
+} from 'firebase/firestore';
+import { toastErrorMessage, toastSuccessMessage } from '~/utils/toastMessage';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -56,6 +63,36 @@ const recommendNameCollection = collection(db, 'RecommendedNames');
 const userCollection = (email: string) => {
   return doc(db, 'users', email);
 };
+
+const saveOrUpdateUser = async (email: string, userData) => {
+  if (!email) {
+    toastErrorMessage('로그인에 실패하였습니다');
+    return;
+  }
+  const userDocRef = userCollection(email);
+  const docSnap = await getDoc(userDocRef);
+  const { lastUpdated } = userData;
+
+  if (docSnap.exists()) {
+    // 문서가 이미 존재하므로, 문서를 업데이트합니다.
+    updateDoc(userCollection(email), { lastUpdated })
+      .then(() => {
+        toastSuccessMessage('로그인되었습니다.');
+      })
+      .catch((error) => {
+        toastErrorMessage('로그인에 실패하였습니다');
+      });
+  } else {
+    // 문서가 존재하지 않으므로, 새 문서를 추가합니다.
+    setDoc(doc(db, 'users', email), userData)
+      .then((docRef) => {
+        toastSuccessMessage('로그인되었습니다.');
+      })
+      .catch((error) => {
+        toastErrorMessage('로그인에 실패하였습니다');
+      });
+  }
+};
 const addRecommendNameToUserCollection = (email: string, docRefId: string) => {
   updateDoc(userCollection(email), {
     RecommendName: arrayUnion(docRefId),
@@ -67,6 +104,24 @@ const saveRecommendName = (email: string, recommendNameData) => {
     addRecommendNameToUserCollection(email, docRef.id);
 
     window.location.href = '/result?recommendid=' + docRef.id;
+  });
+};
+
+const updateRecommendName = async (docId: string, recommendNameData) => {
+  const recommendNameRef = doc(recommendNameCollection, docId);
+  const { recommendName, lastUpdated } = recommendNameData;
+  await updateDoc(recommendNameRef, {
+    lastUpdated,
+    recommendName: arrayUnion(...recommendName),
+  });
+};
+
+const updateRecommendNameOptions = async (docId: string, options: string[]) => {
+  const recommendNameRef = doc(recommendNameCollection, docId);
+
+  await updateDoc(recommendNameRef, {
+    lastUpdated: Date.now(),
+    options,
   });
 };
 
@@ -116,4 +171,7 @@ export {
   addRecommendNameToUserCollection,
   saveRecommendName,
   getRecommendNameDataForUser,
+  updateRecommendName,
+  saveOrUpdateUser,
+  updateRecommendNameOptions,
 };

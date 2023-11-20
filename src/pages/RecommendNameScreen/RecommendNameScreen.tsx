@@ -3,20 +3,22 @@ import RecommendName from '~/components/RecommendName/RecommendName';
 import RecommendNameSetting from '~/components/RecommendNameSetting/RecommendNameSetting';
 import './RecommendNameScreen.css';
 import { useLocation } from 'react-router-dom';
-import { getRecommendNameDataForUser } from '~/firebase/firebase';
-import {
-  selectIsSignIn,
-  selectUserID,
-  selectEmail,
-  selectUserName,
-} from '~/redux/slice/authSlice';
+import { selectIsSignIn, selectEmail } from '~/redux/slice/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { SAVE_RECOMMEND_NAME } from '~/redux/slice/recommendNameSlice';
 import {
   selectAllRecommendNames,
   selectRecommendNameByRecommendId,
 } from '~/redux/slice/recommendNameSlice';
-
+import {
+  generateAdditionalFunctionNameContent,
+  generateAdditionalVariableNameContent,
+} from '~/utils/nameSuggestion';
+import { getName } from '~/api/openai';
+import { parseAndRemoveNumberPrefixes } from '~/utils/stringParser';
+import {
+  useUpdateRecommendNameData,
+  useUpdateRecommendNameOptions,
+} from '~/hooks/useData';
 type ContentProps = {
   desc: string;
   recommendName: string[];
@@ -33,22 +35,56 @@ const RecommendNameScreen = () => {
   const recommendID = queryParams.get('recommendid');
   const info = useSelector(selectAllRecommendNames);
   const content = useSelector(selectRecommendNameByRecommendId(recommendID));
-
-  const onMoreClick = () => {
-    //TODO 추가 데이터 요청 로직 구현
+  const recommendNameMutation = useUpdateRecommendNameData();
+  const optionMutation = useUpdateRecommendNameOptions();
+  const updateRecommendNameData = (recommendItem: string[]) => {
+    const recommendData = {
+      lastUpdated: new Date(),
+      recommendName: recommendItem,
+    };
+    recommendNameMutation.mutate({ recommendID, recommendData });
   };
-  const [options, setOptions] = useState(['option1', 'option2', 'option3']);
-  // const [content, setContent] = useState<ContentProps | null>(null);
+  const getContent = () => {
+    if (content.type === 'function')
+      return generateAdditionalFunctionNameContent(
+        content?.desc,
+        content?.recommendName,
+        content?.options
+      );
+    return generateAdditionalVariableNameContent(
+      content?.desc,
+      content?.recommendName,
+      content?.options
+    );
+  };
 
-  const addOption = () => {
-    setOptions((prevOptions) => [...prevOptions, 'new option']);
+  const generateAdditionalName = async () => {
+    const newContent = getContent();
+
+    const openAIRecommendName = await getName(newContent);
+    const result = parseAndRemoveNumberPrefixes(openAIRecommendName);
+    updateRecommendNameData(result);
+  };
+  const onMoreClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    generateAdditionalName();
+  };
+
+  const onAddOption = () => {
+    const newOptions = [...content.options, '새로운 옵션'];
+    optionMutation.mutate({ recommendID, options: newOptions });
+  };
+
+  const onEdit = (index: number, value: string) => {
+    const newOptions = [...content.options];
+    newOptions.splice(index, 1, value);
+    optionMutation.mutate({ recommendID, options: newOptions });
   };
 
   const onDelete = (index: number) => {
-    setOptions((prevOptions) => [
-      ...prevOptions.slice(0, index),
-      ...prevOptions.slice(index + 1),
-    ]);
+    const newOptions = [...content.options];
+    newOptions.splice(index, 1);
+    optionMutation.mutate({ recommendID, options: newOptions });
   };
 
   return (
@@ -56,9 +92,10 @@ const RecommendNameScreen = () => {
       <RecommendNameSetting
         type={content?.type}
         description={content?.desc}
-        options={options}
-        addOption={addOption}
+        options={content?.options}
+        onAddOption={onAddOption}
         onDelete={onDelete}
+        onEdit={onEdit}
       />
       <RecommendName names={content?.recommendName} onMoreClick={onMoreClick} />
     </div>

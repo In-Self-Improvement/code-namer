@@ -9,8 +9,9 @@ const RecommendNameSetting = ({
   type,
   description,
   options,
-  addOption,
   onDelete,
+  onEdit,
+  onAddOption,
 }) => {
   const isFunction = type === 'function';
   const Icon = isFunction ? functionIcon : variableIcon;
@@ -29,9 +30,10 @@ const RecommendNameSetting = ({
           key={`${option}${index}`}
           name={option}
           onDelete={onDelete.bind(this, index)}
+          onEdit={onEdit.bind(this, index)}
         />
       ))}
-      <OptionSettingAddButton addOption={addOption} />
+      <OptionSettingAddButton addOption={onAddOption} />
     </div>
   );
 };

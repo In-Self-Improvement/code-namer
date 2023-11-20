@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
 import './SettingOptionCard.css';
 
-const SettingOptionCard = ({ name, onDelete }) => {
-  const [isOn, setIsOn] = useState(true);
-  const [optionName, setOptionName] = useState(name);
+const SettingOptionCard = ({ name, onDelete, onEdit }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [inputValue, setInputValue] = useState(name);
 
-  const toggle = () => {
-    setIsOn(!isOn);
+  const onSave = () => {
+    onEdit(inputValue);
   };
 
-  const handleNameChange = (event) => {
-    setOptionName(event.target.value);
+  const onEditToggle = (event) => {
+    event.preventDefault();
+    setIsEditing(!isEditing);
+    if (isEditing) {
+      onSave();
+    }
+  };
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
   };
 
   return (
     <div className="setting-option-card">
-      <span className={isOn ? '' : 'off'}>{name}</span>
+      {isEditing ? (
+        <input type="text" value={inputValue} onChange={handleInputChange} />
+      ) : (
+        <span>{name}</span>
+      )}
       <div className="button-container">
-        <button onClick={toggle}>{isOn ? 'ON' : 'OFF'}</button>
+        <button onClick={onEditToggle}>{isEditing ? 'Save' : 'Edit'}</button>
         <button onClick={onDelete}>X</button>
       </div>
     </div>
