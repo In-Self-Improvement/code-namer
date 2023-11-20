@@ -1,46 +1,33 @@
-# 그라운드 규칙
+<p align='center'>
+<img src='https://github.com/In-Self-Improvement/code-namer/assets/69666944/c18d948b-222b-4517-aa50-4f67cfa75c50' width='30%' />
+</p>
 
-이 문서는 브랜치 명명 규칙과 커밋 메시지 컨벤션에 대한 그라운드 규칙을 정의합니다. 이 규칙들은 프로젝트의 일관성을 유지하고 협업을 용이하게 하기 위해 적용됩니다.
+<p align='center'>
+  <img src='https://img.shields.io/badge/React-v18.2.0-61DAFB?logo=React'/>
+  <img src='https://img.shields.io/badge/ReactRouter-v6.18.0-CA4245?logo=React Router'/>
+  <img src='https://img.shields.io/badge/Redux-v8.1.3-764ABC?logo=Redux'/>
+  <img src='https://img.shields.io/badge/yarn-v1.22.15-blue?logo=yarn'/>
+  <img src='https://img.shields.io/badge/AWS-Amazon AWS-yellow?logo=Amazon AWS'/>
+  <img src='https://img.shields.io/badge/GitHub Actions-gray?logo=GitHub Actions'/>
+  <img src='https://img.shields.io/badge/prettier-v9.5.0-F7B93E?logo=prettier'/>
+  <img src='https://img.shields.io/badge/eslint-v8.2.0-4B32C3?logo=eslint'/>
 
-## 브랜치 컨벤션
+</p>
 
-브랜치 명명은 다음과 같은 형식을 따릅니다
+## <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki">📌 기술 및 고민 정리 - WIKI</a>
 
-[`이름`]/[`브랜치 유형`]/[`이슈번호`]
+## 변수명, 함수명 이름 짓는 게 어렵지 않으신가요?
 
-예시: `bong/feat/1`
+## 간단한 기능 설명으로 이름 추천을 받아보세요!
 
-이슈번호는 깃허브 이슈 트래커에서 생성된 번호를 사용합니다.
+## 🛠 프로젝트 아키텍쳐
 
-브랜치 유형은 다음과 같습니다
+<p align='center'>
+<img src='https://github.com/In-Self-Improvement/code-namer/assets/69666944/a70e0c52-fabd-41e3-8372-524ef44bb436' width='60%'/>
+</p>
 
-- `feat/`: 새로운 기능 개발.
-- `fix/`: 버그 수정.
-- `hotfix/`: 프로덕션에 긴급히 적용해야 하는 버그 수정.
-- `release/`: 새 버전 출시 준비.
-- `develop/` : 일반적인 개발 작업.
-- `experiment/` 실험적 기능 테스트.
-- `refactor/`: 코드 리팩토링.
-- `test/`: 테스트 코드 추가 또는 개선.
-- `docs/`: 문서 작업.
-- `chore/`: 빌드 과정 또는 보조 기능 수정.
+## 📌 주요 기능
 
-## 커밋 메세지 컨벤션
-
-커밋 메시지는 다음과 같은 접두사를 사용하여 작성합니다
-
-- `feat`: 새로운 기능 추가.
-- `fix`: 버그 수정.
-- `hotfix`: 급하게 치명적인 버그 수정.
-- `docs`: 문서 수정.
-- `style`: 코드 스타일 변경(코드 로직 변경 없음).
-- `refactor`: 프로덕션 코드 리팩토링.
-- `test`: 테스트 코드 또는 테스트 리팩토링.
-- `chore`: 빌드 과정 또는 보조 기능 수정.
-- `rename`: 파일이나 폴더 이름 변경 또는 이동.
-- `remove`: 파일 삭제.
-- `comment`: 주석 추가 또는 변경.
-
-각 커밋 메시지는 변경 내용을 명확히 설명해야 하며, 관련된 이슈를 해결하거나 닫는 경우, `close`, `fixes`, `resolves`와 같은 키워드와 함께 이슈 번호를 포함시킵니다.
-
-예시: `feat: 사용자 인증 기능 추가 (close #123)`
+| <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%8E%98%EC%9D%B4%EC%A7%80">🔗소셜 로그인</a> | <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EC%B1%8C%EB%A6%B0%EC%A7%80">🔗이름 추천</a> | <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EC%9D%B8%EC%A6%9D-%ED%8E%98%EC%9D%B4%EC%A7%80">🔗옵션 추가 및 추가 생성</a> |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                <img width="320" alt="소셜로그인" src="https://github.com/In-Self-Improvement/code-namer/assets/69666944/098d11b3-d927-459c-8de4-ffa11f70db24">                 |  <img width="320" alt="이름 추천" src="https://github.com/In-Self-Improvement/code-namer/assets/69666944/7d7fb781-f62f-46a9-9706-ce2f16bad036">  |                                                              <img width="320" alt="옵션 추가 및 추가 생성" src="">                                                               |
