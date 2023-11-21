@@ -2,6 +2,9 @@
 <img src='https://github.com/In-Self-Improvement/code-namer/assets/69666944/c18d948b-222b-4517-aa50-4f67cfa75c50' width='30%' />
 </p>
 
+<a href='https://www.codenamer.net'>
+<p align='center'>Code Namer</p>
+</a>
 <p align='center'>
   <img src='https://img.shields.io/badge/React-v18.2.0-61DAFB?logo=React'/>
   <img src='https://img.shields.io/badge/ReactRouter-v6.18.0-CA4245?logo=React Router'/>
