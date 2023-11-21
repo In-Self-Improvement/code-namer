@@ -14,7 +14,7 @@
 
 </p>
 
-## <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki">📌 기술 및 고민 정리 - WIKI</a>
+## <a href="https://github.com/In-Self-Improvement/code-namer/wiki">📌 기술 및 고민 정리 - WIKI</a>
 
 ## Code Namer 소개
 
