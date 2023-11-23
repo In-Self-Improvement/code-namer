@@ -3,7 +3,7 @@
 </p>
 
 <a href='https://www.codenamer.net'>
-<p align='center'>Code Namer</p>
+<p align='center'>사이트 링크</p>
 </a>
 <p align='center'>
   <img src='https://img.shields.io/badge/React-v18.2.0-61DAFB?logo=React'/>
@@ -33,6 +33,6 @@
 
 ## 📌 주요 기능
 
-| <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%8E%98%EC%9D%B4%EC%A7%80">🔗소셜 로그인</a> | <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EC%B1%8C%EB%A6%B0%EC%A7%80">🔗이름 추천</a> | <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EC%9D%B8%EC%A6%9D-%ED%8E%98%EC%9D%B4%EC%A7%80">🔗옵션 추가 및 추가 생성</a> |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|                <img width="320" alt="소셜로그인" src="https://github.com/In-Self-Improvement/code-namer/assets/69666944/098d11b3-d927-459c-8de4-ffa11f70db24">                 |  <img width="320" alt="이름 추천" src="https://github.com/In-Self-Improvement/code-namer/assets/69666944/7d7fb781-f62f-46a9-9706-ce2f16bad036">  |                                                              <img width="320" alt="옵션 추가 및 추가 생성" src="">                                                               |
+| <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%8E%98%EC%9D%B4%EC%A7%80">🔗소셜 로그인</a> |      <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EC%B1%8C%EB%A6%B0%EC%A7%80">🔗이름 추천</a>       | <a href="https://github.com/dokyunglee0905/makehabit_FE/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5#-%EC%9D%B8%EC%A6%9D-%ED%8E%98%EC%9D%B4%EC%A7%80">🔗옵션 추가 및 추가 생성</a> |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|          <img width="320" height='200' alt="소셜로그인" src="https://github.com/In-Self-Improvement/code-namer/assets/69666944/098d11b3-d927-459c-8de4-ffa11f70db24">          | <img width="320" height='200' alt="이름 추천" src="https://github.com/In-Self-Improvement/code-namer/assets/69666944/77e9a04a-faf8-40b5-a304-7b226a18692c"> |     <img width="320" height='200' alt="옵션 추가 및 추가 생성" src="https://github.com/In-Self-Improvement/code-namer/assets/69666944/f7e90e41-30c6-4e76-9b1a-50a20389541f">     |
