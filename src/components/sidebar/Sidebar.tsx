@@ -39,11 +39,9 @@ const Sidebar = ({ onClick }: SidebarProps) => {
   };
 
   useEffect(() => {
-    dispatch(SET_LOADING(true));
     if (isSignin && data) {
       setContent(data);
       dispatch(SAVE_RECOMMEND_NAME(data));
-      dispatch(SET_LOADING(false));
     }
   }, [isSignin, data]);
 

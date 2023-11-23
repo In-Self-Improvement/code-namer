@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  MutationFunction,
+} from '@tanstack/react-query';
 import {
   updateRecommendName,
   updateRecommendNameOptions,
@@ -32,9 +37,53 @@ export const useUpdateRecommendNameOptions = () => {
     }: {
       recommendID: string;
       options: string[];
-    }) => updateRecommendNameOptions(recommendID, options),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['recommendNameData'] });
+    }) => {
+      return updateRecommendNameOptions(recommendID, options);
+    },
+    onMutate: async ({
+      recommendID,
+      options,
+    }: {
+      recommendID: string;
+      options: string[];
+    }) => {
+      const newData = queryClient.setQueryData(['options', recommendID], {
+        options,
+      });
+
+      return newData;
+    },
+    onError: (error) => {},
+  });
+};
+
+export const useUpdateRecommendName = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      recommendID,
+      recommendNameList,
+    }: {
+      recommendID: string;
+      recommendNameList: string[];
+    }) => {
+      return updateRecommendName(recommendID, recommendNameList);
+    },
+    onMutate: async ({
+      recommendID,
+      recommendNameList,
+    }: {
+      recommendID: string;
+      recommendNameList: string[];
+    }) => {
+      const newData = queryClient.setQueryData(
+        ['recommendNameList', recommendID],
+        {
+          recommendName: recommendNameList,
+        }
+      );
+      return { recommendName: newData };
     },
     onError: (error) => {},
   });
