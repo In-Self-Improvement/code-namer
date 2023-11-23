@@ -107,13 +107,18 @@ const saveRecommendName = (email: string, recommendNameData) => {
   });
 };
 
-const updateRecommendName = async (docId: string, recommendNameData) => {
+const updateRecommendName = async (
+  docId: string,
+  recommendNameList: string[]
+) => {
   const recommendNameRef = doc(recommendNameCollection, docId);
-  const { recommendName, lastUpdated } = recommendNameData;
+
   await updateDoc(recommendNameRef, {
-    lastUpdated,
-    recommendName: arrayUnion(...recommendName),
+    lastUpdated: Date.now(),
+    recommendName: recommendNameList,
   });
+
+  return { recommendName: recommendNameList };
 };
 
 const updateRecommendNameOptions = async (docId: string, options: string[]) => {
@@ -123,6 +128,48 @@ const updateRecommendNameOptions = async (docId: string, options: string[]) => {
     lastUpdated: Date.now(),
     options,
   });
+
+  return options;
+};
+
+const getRecommendOptions = async (recommendId: string) => {
+  const recommendNameRef = doc(recommendNameCollection, recommendId);
+  const recommendNameDoc = await getDoc(recommendNameRef);
+  if (recommendNameDoc.exists()) {
+    const dataWithRecommendId = recommendNameDoc.data();
+    const currentOptions = dataWithRecommendId?.options;
+    return { options: currentOptions };
+  }
+};
+
+const getRecommendNameList = async (recommendId: string) => {
+  const recommendNameRef = doc(recommendNameCollection, recommendId);
+  const recommendNameDoc = await getDoc(recommendNameRef);
+  if (recommendNameDoc.exists()) {
+    const dataWithRecommendId = recommendNameDoc.data();
+    const currentRecommendName = dataWithRecommendId?.recommendName;
+    return { recommendName: currentRecommendName };
+  }
+};
+
+const getType = async (recommendId: string) => {
+  const recommendNameRef = doc(recommendNameCollection, recommendId);
+  const recommendNameDoc = await getDoc(recommendNameRef);
+  if (recommendNameDoc.exists()) {
+    const dataWithRecommendId = recommendNameDoc.data();
+    const currentType = dataWithRecommendId?.type;
+    return { type: currentType };
+  }
+};
+
+const getDesc = async (recommendId: string) => {
+  const recommendNameRef = doc(recommendNameCollection, recommendId);
+  const recommendNameDoc = await getDoc(recommendNameRef);
+  if (recommendNameDoc.exists()) {
+    const dataWithRecommendId = recommendNameDoc.data();
+    const currentDesc = dataWithRecommendId?.desc;
+    return { desc: currentDesc };
+  }
 };
 
 const getRecommendNamesFromUser = async (email: string) => {
@@ -174,4 +221,8 @@ export {
   updateRecommendName,
   saveOrUpdateUser,
   updateRecommendNameOptions,
+  getRecommendOptions,
+  getRecommendNameList,
+  getType,
+  getDesc,
 };
