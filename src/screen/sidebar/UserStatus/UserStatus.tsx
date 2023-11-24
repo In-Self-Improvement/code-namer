@@ -3,11 +3,11 @@ import './UserStatus.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import SignInButton from '~/components/UserStatus/SignInButton/SignInButton';
-import SignOutButton from '~/components/UserStatus/SignOutButton/SignOutButton';
+import SignInButton from '~/screen/sidebar/UserStatus/SignInButton/SignInButton';
+import SignOutButton from '~/screen/sidebar/UserStatus/SignOutButton/SignOutButton';
 
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
-import SignInModal from '~/components/Signin/SignInModal';
+import SignInModal from '~/screen/Signin/SignInModal';
 import { useAuth } from '~/hooks/useAuth';
 import { auth } from '~/firebase/firebase';
 const UserStatus = () => {

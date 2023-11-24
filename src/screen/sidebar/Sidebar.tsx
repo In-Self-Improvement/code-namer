@@ -3,7 +3,7 @@ import './Sidebar.css';
 import SidebarHeader from './sidebarHeader/SidebarHeader';
 import SidebarContent from './sidebarContent/SidebarContent';
 import NavigationButton from './navigationButton/NavigationButton';
-import UserStatus from '~/components/UserStatus/UserStatus';
+import UserStatus from '~/screen/sidebar/UserStatus/UserStatus';
 import { getRecommendNameDataForUser } from '~/firebase/firebase';
 import {
   selectIsSignIn,
