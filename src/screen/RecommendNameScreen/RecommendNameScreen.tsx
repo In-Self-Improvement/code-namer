@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import RecommendName from '~/components/RecommendName/RecommendName';
-import RecommendNameSetting from '~/components/RecommendNameSetting/RecommendNameSetting';
+import RecommendName from '~/screen/RecommendNameScreen/RecommendName/RecommendName';
+import RecommendNameSetting from '~/screen/RecommendNameScreen/RecommendNameSetting/RecommendNameSetting';
 import './RecommendNameScreen.css';
 import { useLocation } from 'react-router-dom';
 import { selectIsSignIn, selectEmail } from '~/redux/slice/authSlice';
@@ -28,6 +28,7 @@ import {
   getType,
   updateRecommendNameOptions,
 } from '~/firebase/firebase';
+import { SET_LOADING } from '~/redux/slice/loadingSlice';
 type ContentProps = {
   desc: string;
   recommendName: string[];
@@ -45,11 +46,13 @@ const RecommendNameScreen = () => {
   const recommendID = queryParams.get('recommendid');
   const recommendNameMutation = useUpdateRecommendName();
   const optionMutation = useUpdateRecommendNameOptions();
+  const dispatch = useDispatch();
   const updateRecommendNameData = (recommendItem: string[]) => {
     recommendNameMutation.mutate({
       recommendID,
       recommendNameList: [...recommendName, ...recommendItem],
     });
+    dispatch(SET_LOADING(false));
   };
   const getContent = () => {
     if (type === 'function')
@@ -69,6 +72,7 @@ const RecommendNameScreen = () => {
     updateRecommendNameData(result);
   };
   const onMoreClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(SET_LOADING(true));
     event.preventDefault();
     generateAdditionalName();
   };
