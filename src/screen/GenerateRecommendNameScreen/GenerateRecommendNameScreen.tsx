@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './GenerateRecommendName.css';
+import './GenerateRecommendNameScreen.css';
 import Select from 'react-select';
 import { getName } from '~/api/openai';
 import {
@@ -7,7 +7,7 @@ import {
   generateVariableNameContent,
 } from '~/utils/nameSuggestion';
 
-import SignInModal from '~/components/Signin/SignInModal';
+import SignInModal from '~/screen/Signin/SignInModal';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -27,7 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import { nameSuggestionOption } from '~/utils/nameSuggestionOption';
 import { parseAndRemoveNumberPrefixes } from '~/utils/stringParser';
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
-const GenerateRecommendName = () => {
+const GenerateRecommendNameScreen = () => {
   const [selectedItem, setSelectedItem] = useState('');
   const [desc, setDesc] = useState('');
   const [isSignInModalOpen, setSignInModalOpen] = useState(false);
@@ -162,4 +162,4 @@ const GenerateRecommendName = () => {
   );
 };
 
-export default GenerateRecommendName;
+export default GenerateRecommendNameScreen;
