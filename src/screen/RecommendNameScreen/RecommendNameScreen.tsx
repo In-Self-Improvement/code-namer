@@ -21,14 +21,13 @@ import {
   useUpdateRecommendNameOptions,
 } from '~/hooks/useData';
 import { useQuery } from '@tanstack/react-query';
-import {
-  getDesc,
-  getRecommendNameList,
-  getRecommendOptions,
-  getType,
-  updateRecommendNameOptions,
-} from '~/firebase/firebase';
+import { getDesc, getType } from '~/firebase/firebase';
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
+import { useRecommendOptions } from '~/hooks/useRecommendOptions';
+import { useRecommendNameList } from '~/hooks/useRecommendNameList';
+import { useType } from '~/hooks/useType';
+import { useDesc } from '~/hooks/useDesc';
+
 type ContentProps = {
   desc: string;
   recommendName: string[];
@@ -36,17 +35,18 @@ type ContentProps = {
 };
 
 const RecommendNameScreen = () => {
-  const [options, setOptions] = useState<string[]>([]);
-  const [recommendName, setRecommendName] = useState<string[]>([]);
-  const [type, setType] = useState<string>();
-  const [desc, setDesc] = useState<string>();
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const recommendID = queryParams.get('recommendid');
   const recommendNameMutation = useUpdateRecommendName();
   const optionMutation = useUpdateRecommendNameOptions();
   const dispatch = useDispatch();
+
+  const { options } = useRecommendOptions(recommendID);
+  const { recommendName } = useRecommendNameList(recommendID);
+  const { type } = useType(recommendID);
+  const { desc } = useDesc(recommendID);
+
   const updateRecommendNameData = (recommendItem: string[]) => {
     recommendNameMutation.mutate({
       recommendID,
@@ -76,54 +76,8 @@ const RecommendNameScreen = () => {
     event.preventDefault();
     generateAdditionalName();
   };
-  const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => getRecommendOptions(recommendID),
-    queryKey: ['options', recommendID],
-    enabled: !!recommendID,
-  });
-  const { data: recommendNameList } = useQuery({
-    queryFn: () => getRecommendNameList(recommendID),
-    queryKey: ['recommendNameList', recommendID],
-    enabled: !!recommendID,
-  });
-  const { data: typeInfo } = useQuery({
-    queryFn: () => getType(recommendID),
-    queryKey: ['type', recommendID],
-    enabled: !!recommendID,
-  });
-
-  const { data: descInfo } = useQuery({
-    queryFn: () => getDesc(recommendID),
-    queryKey: ['desc', recommendID],
-    enabled: !!recommendID,
-  });
-
-  React.useEffect(() => {
-    if (data) {
-      setOptions(data?.options);
-    }
-  }, [data]);
-
-  React.useEffect(() => {
-    if (recommendNameList) {
-      setRecommendName(recommendNameList?.recommendName);
-    }
-  }, [recommendNameList]);
-
-  React.useEffect(() => {
-    if (typeInfo) {
-      setType(typeInfo?.type);
-    }
-  }, [typeInfo]);
-
-  React.useEffect(() => {
-    if (descInfo) {
-      setDesc(descInfo?.desc);
-    }
-  }, [descInfo]);
 
   const onAddOption = () => {
-    //options {}에서 [] 배열로 변경
     const newOptions = [...options, '새로운 옵션'];
     optionMutation.mutate({ recommendID, options: newOptions });
   };
@@ -140,8 +94,6 @@ const RecommendNameScreen = () => {
     optionMutation.mutate({ recommendID, options: newOptions });
   };
 
-  if (isLoading) return <div>로딩중</div>;
-  if (isError) return <div>에러{error.toString()}</div>;
   return (
     <div className="recommend-name-screen-container">
       <RecommendNameSetting
