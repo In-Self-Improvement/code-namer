@@ -11,6 +11,7 @@ import { auth, saveOrUpdateUser } from '~/firebase/firebase';
 
 import { SET_LOADING } from '~/redux/slice/loadingSlice';
 import './SignInModal.css';
+import { toastErrorMessage } from '~/utils/toastMessage';
 const SignInModal = ({ isOpen, onRequestClose }) => {
   const dispatch = useDispatch();
   const saveTokenId = async () => {
@@ -40,8 +41,16 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
     onRequestClose();
   };
 
-  const signInError = (error: string) => {
-    alert(error);
+  const signInError = (fromUrl: string, error: string) => {
+    if (fromUrl === 'github') {
+      toastErrorMessage(
+        '이미 구글 계정으로 가입된 이메일입니다. 구글 로그인을 이용해주세요.'
+      );
+    } else if (fromUrl === 'google') {
+      toastErrorMessage(
+        '이미 깃허브 계정으로 가입된 이메일입니다. 깃허브 로그인을 이용해주세요.'
+      );
+    }
     // TODO: 사용자에게 에러 메시지 표시
     dispatch(SET_LOADING(false));
   };
@@ -49,13 +58,17 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
     dispatch(SET_LOADING(true));
 
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then(signInSuccess).catch(signInError);
+    signInWithPopup(auth, provider)
+      .then(signInSuccess)
+      .catch(signInError.bind(this, 'google'));
   };
 
   const signInWithGithub = () => {
     dispatch(SET_LOADING(true));
     const provider = new GithubAuthProvider();
-    signInWithPopup(auth, provider).then(signInSuccess).catch(signInError);
+    signInWithPopup(auth, provider)
+      .then(signInSuccess)
+      .catch(signInError.bind(this, 'github'));
   };
 
   return (
