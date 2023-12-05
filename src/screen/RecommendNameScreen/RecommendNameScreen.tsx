@@ -3,15 +3,12 @@ import RecommendName from '~/screen/RecommendNameScreen/RecommendName/RecommendN
 import RecommendNameSetting from '~/screen/RecommendNameScreen/RecommendNameSetting/RecommendNameSetting';
 import './RecommendNameScreen.css';
 import { useLocation } from 'react-router-dom';
-import { selectIsSignIn, selectEmail } from '~/redux/slice/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectAllRecommendNames,
-  selectRecommendNameByRecommendId,
-} from '~/redux/slice/recommendNameSlice';
-import {
-  generateAdditionalFunctionNameContent,
-  generateAdditionalVariableNameContent,
+  additionalFunctionAssistantContent,
+  additionalFunctionUserContent,
+  additionalVariableAssistantContent,
+  additionalVariableUserContent,
 } from '~/utils/nameSuggestion';
 import { getName } from '~/api/openai';
 import { parseAndRemoveNumberPrefixes } from '~/utils/stringParser';
@@ -54,20 +51,25 @@ const RecommendNameScreen = () => {
     });
     dispatch(SET_LOADING(false));
   };
-  const getContent = () => {
+  const getUserContent = () => {
     if (type === 'function')
-      return generateAdditionalFunctionNameContent(
-        desc,
-        recommendName,
-        options
-      );
-    return generateAdditionalVariableNameContent(desc, recommendName, options);
+      return additionalFunctionUserContent(desc, recommendName);
+    return additionalVariableUserContent(desc, recommendName);
+  };
+
+  const getAssistantContent = () => {
+    if (type === 'function') return additionalFunctionAssistantContent(options);
+    return additionalVariableAssistantContent(options);
   };
 
   const generateAdditionalName = async () => {
-    const newContent = getContent();
+    const newUserContent = getUserContent();
+    const newAssistantContent = getAssistantContent();
 
-    const openAIRecommendName = await getName(newContent);
+    const openAIRecommendName = await getName(
+      newUserContent,
+      newAssistantContent
+    );
     const result = parseAndRemoveNumberPrefixes(openAIRecommendName);
     updateRecommendNameData(result);
   };
