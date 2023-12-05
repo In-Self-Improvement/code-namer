@@ -4,6 +4,10 @@ import Router from './Router';
 import Sidebar from './screen/sidebar/Sidebar';
 import Modal from 'react-modal';
 import { ToastContainer } from 'react-toastify';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('G-KEHWJRKQMJ');
+ReactGA.pageview(window.location.pathname + window.location.search);
 Modal.setAppElement('#root');
 
 const App = () => {
