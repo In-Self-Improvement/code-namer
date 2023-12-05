@@ -3,8 +3,10 @@ import './GenerateRecommendNameScreen.css';
 import Select from 'react-select';
 import { getName } from '~/api/openai';
 import {
-  generateFunctionNameContent,
-  generateVariableNameContent,
+  functionAssistantContent,
+  functionUserContent,
+  variableAssistantContent,
+  variableUserContent,
 } from '~/utils/nameSuggestion';
 
 import SignInModal from '~/screen/Signin/SignInModal';
@@ -49,9 +51,14 @@ const GenerateRecommendNameScreen = () => {
     { value: 'function', label: '함수' },
     { value: 'variable', label: '변수' },
   ];
-  const getContent = () => {
-    if (selectedItem === 'function') return generateFunctionNameContent(desc);
-    return generateVariableNameContent(desc);
+  const getUserContent = () => {
+    if (selectedItem === 'function') return functionUserContent(desc);
+    return variableUserContent(desc);
+  };
+
+  const getAssistantContent = () => {
+    if (selectedItem === 'function') return functionAssistantContent();
+    return variableAssistantContent();
   };
 
   const checkSignin = () => {
@@ -92,8 +99,9 @@ const GenerateRecommendNameScreen = () => {
     checkSignin();
     const enableGenerateName = checkDescAndSelectedItem();
     if (enableGenerateName) {
-      const content = getContent();
-      const openAIRecommendName = await getName(content);
+      const userContent = getUserContent();
+      const assistantContent = getAssistantContent();
+      const openAIRecommendName = await getName(userContent, assistantContent);
       const result = parseAndRemoveNumberPrefixes(openAIRecommendName);
       saveRecommendData(result);
     }
