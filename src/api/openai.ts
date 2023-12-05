@@ -16,7 +16,6 @@ const getName = async (
       { role: 'assistant', content: assistantContent },
     ],
   });
-  console.log('message', completion?.choices[0]?.message?.content);
 
   return completion?.choices[0]?.message?.content;
 };
