@@ -8,3 +8,10 @@
 .recommend-name-screen-container > :first-child {
   border-right: 1px solid #ced4da;
 }
+
+@media (max-width: 600px) {
+  .recommend-name-screen-container {
+    padding: 10px;
+    grid-template-columns: 1fr;
+  }
+}
