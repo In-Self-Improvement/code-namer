@@ -8,15 +8,19 @@ interface SidebarHeaderProps {
   onClick?: () => void;
 }
 
-const SidebarHeader = ({ className, onClick }: SidebarHeaderProps) => (
-  <div className={`sidebar_header_container ${className}`}>
-    <div className="sidebar_header">
-      <button className="sidebar_toggle" onClick={onClick}>
-        <MenuIcon />
-      </button>
-      <h1 className="sidebar_title">Code Namer</h1>
+const SidebarHeader = ({ className, onClick }: SidebarHeaderProps) => {
+  return (
+    <div className={`sidebar_header_container ${className}`}>
+      <div className="sidebar_header">
+        <button className="sidebar_toggle" onClick={onClick}>
+          <MenuIcon />
+        </button>
+        <h1 className="sidebar_title">
+          <a href="/">Code Namer</a>
+        </h1>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default SidebarHeader;
