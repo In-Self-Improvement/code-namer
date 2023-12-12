@@ -32,8 +32,6 @@ export const postData = async (db: string, data: any) => {
     });
 };
 
-const getUserData = () => {};
-
 export const postUserData = async (data: any) => {
   const userId = 'test3@naver.com';
   // const userUId =
