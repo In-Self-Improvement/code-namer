@@ -1,3 +1,5 @@
+import 'openai/shims/node';
+import 'node-fetch';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
