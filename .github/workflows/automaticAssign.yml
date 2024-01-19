@@ -1,6 +1,6 @@
 name: Review Assign
 
-on: 
+on:
   pull_request:
     types: [opened, ready_for_review]
 
@@ -11,4 +11,3 @@ jobs:
       - uses: hkusu/review-assign-action@v1
         with:
           assignees: ${{ github.actor }}
-          
